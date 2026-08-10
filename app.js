@@ -266,7 +266,16 @@ function prixMini(f) {
 function labelPrix(f) {
   const p = prixMini(f);
   if (f.perso) return f.prixTexte || (p ? `${euro(p)}/adulte` : "Gratuit");
+  // Les restaurants n'ont pas de billet d'entrée : on affiche leur budget.
+  if (f.budget) return f.budget;
   return p === 0 ? "Gratuit" : `dès ${euro(p)}/adulte`;
+}
+
+/* Pastille de note : toujours accompagnée de sa plateforme et du nombre
+   d'avis — une note hors contexte ne veut rien dire. */
+function labelNote(note) {
+  const val = note.valeur.toLocaleString("fr-FR", { minimumFractionDigits: 1 });
+  return `★ ${val} · ${note.sur}${note.avis ? ` (${note.avis})` : ""}`;
 }
 
 function refsDuSlot(slot) {
@@ -419,6 +428,7 @@ function renderGrid() {
         </div>
         <div class="card-body">
           <div class="meta">
+            ${f.note ? `<span class="chip note">${esc(labelNote(f.note))}</span>` : ""}
             <span class="chip price">${esc(labelPrix(f))}</span>
             ${f.trajet.min != null ? `<span class="chip">${f.trajet.km === 0 ? "sur place" : `~${f.trajet.min} min · ${f.trajet.km} km`}</span>` : ""}
             ${f.duree ? `<span class="chip">${esc(f.duree)}</span>` : ""}
@@ -646,7 +656,9 @@ function corpsFicheCatalogue(f) {
     return `
       <div class="spot">
         <div class="spot-head">
-          <input type="checkbox" data-spot="${i}" ${s.prix.optionnel ? "" : "checked"} aria-label="Compter ${esc(s.nom)}">
+          ${f.cat === "resto"
+            ? ""
+            : `<input type="checkbox" data-spot="${i}" ${s.prix.optionnel ? "" : "checked"} aria-label="Compter ${esc(s.nom)}">`}
           <div>
             <div class="spot-name">${esc(s.nom)}</div>
             <div class="spot-detail">${esc(s.detail)}</div>
@@ -661,28 +673,37 @@ function corpsFicheCatalogue(f) {
     <div class="block">
       <p class="lede">${esc(f.resume)}</p>
       <div class="meta" style="margin-top:12px">
+        ${f.note ? `<a class="chip note" href="${esc(f.note.url)}" target="_blank" rel="noopener">${esc(labelNote(f.note))} ↗</a>` : ""}
         <span class="chip">${f.trajet.km === 0 ? "Sur place" : `🚗 ~${f.trajet.min} min · ${f.trajet.km} km depuis Binic`}</span>
         <span class="chip">⏱ ${esc(f.duree)}</span>
       </div>
       ${f.trajet.note ? `<p class="spot-detail" style="margin-top:8px">${esc(f.trajet.note)}</p>` : ""}
+      ${f.note ? `<p class="spot-detail" style="margin-top:6px">Note relevée le ${VERIF} — les avis bougent, à recouper avant de réserver.</p>` : ""}
     </div>
 
     <div class="block">
-      <h3>À voir &amp; tarifs</h3>
-      <div class="calc">
-        <label for="nb-a">Adultes</label>
-        <input type="number" id="nb-a" min="0" max="30" value="${localStorage.getItem("bretagne.nbA") || 2}">
-        <label for="nb-e">Enfants</label>
-        <input type="number" id="nb-e" min="0" max="30" value="${localStorage.getItem("bretagne.nbE") || 0}">
-      </div>
-      ${spots}
-      <div class="total">
-        <span>Total estimé</span>
-        <span style="text-align:right">
-          <span id="total-val">—</span>
-          <small>hors repas, essence et parkings non listés</small>
-        </span>
-      </div>
+      ${f.cat === "resto"
+        ? `<h3>La table</h3>
+           ${spots}
+           <p class="spot-detail" style="margin:12px 0 0">
+             Pas de calcul possible : ces établissements ne publient pas leurs prix.
+             Les repas ne sont pas comptés dans le total estimé de la journée.
+           </p>`
+        : `<h3>À voir &amp; tarifs</h3>
+           <div class="calc">
+             <label for="nb-a">Adultes</label>
+             <input type="number" id="nb-a" min="0" max="30" value="${localStorage.getItem("bretagne.nbA") || 2}">
+             <label for="nb-e">Enfants</label>
+             <input type="number" id="nb-e" min="0" max="30" value="${localStorage.getItem("bretagne.nbE") || 0}">
+           </div>
+           ${spots}
+           <div class="total">
+             <span>Total estimé</span>
+             <span style="text-align:right">
+               <span id="total-val">—</span>
+               <small>hors repas, essence et parkings non listés</small>
+             </span>
+           </div>`}
     </div>
 
     <div class="block">
@@ -759,7 +780,7 @@ function recalcTotal(f) {
 }
 
 function brancherFiche(f) {
-  if (!f.perso) {
+  if (!f.perso && f.cat !== "resto") {
     $("#nb-a").addEventListener("input", () => recalcTotal(f));
     $("#nb-e").addEventListener("input", () => recalcTotal(f));
     document.querySelectorAll("[data-spot]").forEach((box) =>

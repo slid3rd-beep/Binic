@@ -454,6 +454,14 @@ main { padding: 16px; max-width: 940px; margin: 0 auto; }
 
 .chip.perso { border-style: dashed; }
 
+.chip.note {
+  background: transparent;
+  border-color: var(--rust);
+  color: var(--rust);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .card.est-resto .card-hero { min-height: 74px; }
 
 /* ---------- sélecteur ---------- */

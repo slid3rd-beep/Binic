@@ -456,6 +456,14 @@ main { padding: 16px; max-width: 940px; margin: 0 auto; }
 
 .chip.perso { border-style: dashed; }
 
+.chip.note {
+  background: transparent;
+  border-color: var(--rust);
+  color: var(--rust);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .card.est-resto .card-hero { min-height: 74px; }
 
 /* ---------- sélecteur ---------- */
@@ -1044,40 +1052,151 @@ const DESTINATIONS = [
   },
 
   {
-    id: "petit-jagu",
-    nom: "Le Petit Jagu",
-    sousTitre: "Déjeuner à Ploëzal, entre Pontrieux et le domaine",
+    id: "rolland",
+    nom: "Rolland",
+    sousTitre: "Plourhan — le mieux noté du secteur",
     emoji: "🍽️",
-    couleur: "#8a5a2b",
+    couleur: "#7a3f2b",
     cat: "resto",
-    trajet: { km: 46, min: 50, note: "À Ploëzal, à 5 min de la Roche-Jagu" },
-    duree: "1 h 30",
+    note: { valeur: 4.9, avis: 329, sur: "Tripadvisor", url: "https://www.tripadvisor.com/Restaurant_Review-g3137939-d24142236-Reviews-Rolland-Plourhan_Cotes_d_Armor_Brittany.html" },
+    budget: "Bib Gourmand — réserver",
+    trajet: { km: 9, min: 13, note: "12 Chemin du Moulin Rolland, Plourhan — entre Binic et Saint-Quay" },
+    duree: "2 h",
     resume:
-      "Le mieux noté des deux restaurants de Ploëzal (4,4/5 sur plus de 130 avis Tripadvisor), cuisine française. Bien placé pour couper la journée entre le canoë à Pontrieux le matin et le domaine l'après-midi.",
+      "Deux frères, Emmanuel au potager et Pierre en cuisine (ex-Mare aux Oiseaux), ont quitté Paris pour retaper un moulin abandonné. Cuisine de la mer et légumes bio cultivés sur place, la viande est écartée. Bib Gourmand au Michelin, repéré aussi par Le Fooding et Gault & Millau. Vue sur les champs et cuisine ouverte.",
     aVoir: [
       {
-        nom: "Déjeuner",
-        detail: "Cuisine française et européenne. Téléphoner pour réserver en août — la salle est petite.",
-        prix: { adulte: 0, enfant: 0, label: "Carte à confirmer — compter un menu de bistrot" },
-        lien: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html",
-        lienLabel: "Avis et coordonnées — Tripadvisor",
-      },
-      {
-        nom: "Autre option : le Chaudron Magique",
-        detail: "Au cœur de Ploëzal, décor rustique-moderne, produits frais et locaux.",
-        prix: { adulte: 0, enfant: 0, label: "Tarifs à confirmer", optionnel: true },
-        lien: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html",
-        lienLabel: "Restaurants de Ploëzal — Tripadvisor",
+        nom: "Déjeuner ou dîner",
+        detail: "Bistronomie autour du poisson, des coquillages et du potager. Réservation indispensable en août.",
+        prix: { adulte: 0, enfant: 0, label: "Carte non publiée — Bib Gourmand" },
+        lien: "https://restaurant-rolland.fr/",
+        lienLabel: "Site officiel et réservation",
       },
     ],
     pratique: [
-      "Les prix ne sont pas publiés en ligne : à confirmer par téléphone.",
-      "Ploëzal est à 5 km de Pontrieux et 2 km de la Roche-Jagu.",
-      "Deux restaurants seulement dans la commune : réserver.",
+      "À 13 min de Binic : le plus proche de la liste, et le mieux noté.",
+      "Cuisine sans viande — à savoir si quelqu'un du groupe n'aime pas le poisson.",
+      "Réserver plusieurs jours à l'avance en pleine saison.",
     ],
     sources: [
-      { titre: "Restaurants de Ploëzal — Tripadvisor", url: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html" },
-      { titre: "Le Petit Jagu — fiche et avis", url: "https://www.tripadvisor.com/Restaurant_Review-g8478011-d8474764-Reviews-Restaurant_Le_Petit_Jagu-Ploezal_Cotes_d_Armor_Brittany.html" },
+      { titre: "Rolland — site officiel", url: "https://restaurant-rolland.fr/" },
+      { titre: "Rolland — guide MICHELIN", url: "https://guide.michelin.com/us/en/bretagne/plourhan_1568608/restaurant/rolland" },
+      { titre: "Rolland — Tripadvisor (4,9/5, 329 avis)", url: "https://www.tripadvisor.com/Restaurant_Review-g3137939-d24142236-Reviews-Rolland-Plourhan_Cotes_d_Armor_Brittany.html" },
+      { titre: "Rolland — Le Fooding", url: "https://lefooding.com/en/restaurants/rolland" },
+    ],
+  },
+
+  {
+    id: "le-tachen",
+    nom: "Le Tachen",
+    sousTitre: "Ploëzal — planches et vins, entre Pontrieux et le domaine",
+    emoji: "🍷",
+    couleur: "#7a3f5e",
+    cat: "resto",
+    note: { valeur: 4.8, avis: 237, sur: "Restaurant Guru", url: "https://restaurantguru.com/Bar-Creperie-du-Tachen-Pontrieux" },
+    budget: "Planches et tapas",
+    trajet: { km: 46, min: 50, note: "À Ploëzal, à 5 min de la Roche-Jagu et 5 km de Pontrieux" },
+    duree: "1 h 30",
+    resume:
+      "Attention, ce n'est plus vraiment un restaurant : c'est devenu un bar à vins et à bières avec des planches — huîtres, charcuterie, camembert rôti, escargots farcis, os à moelle, rillettes de la mer. Décor décalé, patrons réputés très accueillants, belle cave. Idéalement placé entre Pontrieux et la Roche-Jagu.",
+    aVoir: [
+      {
+        nom: "Planches et cave à vins",
+        detail: "Ardoises à partager plutôt qu'un menu classique. Vérifier les horaires : c'est un bar, pas un service de midi garanti.",
+        prix: { adulte: 0, enfant: 0, label: "À la planche — tarifs non publiés" },
+        lien: "https://www.petitfute.com/v8574-ploezal-22260/c1169-s-amuser-sortir/c182-bar-cafe/c1239-bar-a-vin/1996811-le-tachen.html",
+        lienLabel: "Fiche et avis — Petit Futé",
+      },
+    ],
+    pratique: [
+      "Formule apéro dînatoire plutôt que déjeuner assis : à caler au soir, ou au midi en vérifiant l'ouverture.",
+      "Si le groupe veut un vrai déjeuner à table, Le Petit Jagu est à côté — mais il est à 4,4/5, sous votre seuil.",
+      "Téléphoner avant de faire la route : les horaires d'un bar bougent.",
+    ],
+    sources: [
+      { titre: "Le Tachen — Restaurant Guru (4,8/5, 237 avis)", url: "https://restaurantguru.com/Bar-Creperie-du-Tachen-Pontrieux" },
+      { titre: "Le Tachen — Petit Futé", url: "https://www.petitfute.co.uk/v8574-ploezal-22260/c1169-s-amuser-sortir/c182-bar-cafe/c1239-bar-a-vin/1996811-le-tachen.html" },
+      { titre: "Le Tachen — Tripadvisor", url: "https://www.tripadvisor.com/Restaurant_Review-g8478011-d8305912-Reviews-Le_Tachen-Ploezal_Cotes_d_Armor_Brittany.html" },
+    ],
+  },
+
+  {
+    id: "ptit-flot",
+    nom: "Le P'tit Flot",
+    sousTitre: "Saint-Quay-Portrieux — à 12 min de Binic",
+    emoji: "🍽️",
+    couleur: "#2b5f7a",
+    cat: "resto",
+    note: { valeur: 4.8, avis: null, sur: "Google", url: "https://www.tripadvisor.com/Restaurants-g735170-Saint_Quay_Portrieux_Cotes_d_Armor_Brittany.html" },
+    budget: "Carte non publiée",
+    trajet: { km: 8, min: 12, note: "Saint-Quay-Portrieux, sur la route de Paimpol" },
+    duree: "1 h 30",
+    resume:
+      "Le mieux noté de Saint-Quay-Portrieux, la station voisine. Pratique pour un dîner sans faire de route après une journée sur la côte.",
+    aVoir: [
+      {
+        nom: "Déjeuner ou dîner",
+        detail: "Réserver en août : Saint-Quay est très fréquenté.",
+        prix: { adulte: 0, enfant: 0, label: "Tarifs non publiés en ligne" },
+        lien: "https://www.tripadvisor.com/Restaurants-g735170-Saint_Quay_Portrieux_Cotes_d_Armor_Brittany.html",
+        lienLabel: "Restaurants de Saint-Quay — Tripadvisor",
+      },
+    ],
+    pratique: [
+      "La note vient d'un agrégateur : à recouper sur Google Maps avant de réserver.",
+      "Saint-Quay est à 12 min de Binic par la côte.",
+    ],
+    sources: [
+      { titre: "Restaurants de Saint-Quay-Portrieux — Tripadvisor", url: "https://www.tripadvisor.com/Restaurants-g735170-Saint_Quay_Portrieux_Cotes_d_Armor_Brittany.html" },
+      { titre: "Saint-Quay-Portrieux — Restaurant Guru", url: "https://restaurantguru.com/Saint-Quay-Portrieux" },
+    ],
+  },
+
+  {
+    id: "restos-paimpol",
+    nom: "Déjeuner à Paimpol",
+    sousTitre: "Trois adresses à 4,7/5 et plus",
+    emoji: "🦪",
+    couleur: "#8a5a2b",
+    cat: "resto",
+    note: { valeur: 4.8, avis: null, sur: "Google", url: "https://restaurantguru.com/Paimpol" },
+    budget: "3 adresses au choix",
+    trajet: { km: 30, min: 35, note: "À combiner avec l'abbaye de Beauport ou le départ pour Bréhat" },
+    duree: "1 h 30",
+    resume:
+      "Les quais de Paimpol concentrent les tables de fruits de mer — huîtres, coquillages, sardines au beurre demi-sel. Trois adresses passent votre seuil ; à réserver, c'est le port le plus couru du secteur en août.",
+    aVoir: [
+      {
+        nom: "Le Fifties — 4,8/5",
+        detail: "2 rue des Islandais. Plus de 280 avis. Cuisine américaine, options végétariennes — le mieux noté de la ville, mais pas une table de fruits de mer.",
+        prix: { adulte: 0, enfant: 0, label: "4,8/5 sur Google (280+ avis)" },
+        lien: "https://restaurantguru.com/Le-Fifties-Paimpol",
+        lienLabel: "Fiche et avis",
+      },
+      {
+        nom: "Le 18 Cuisine Bistro — 4,7/5",
+        detail: "18 rue des Huit Patriotes. Plus de 280 avis. Bistro.",
+        prix: { adulte: 0, enfant: 0, label: "4,7/5 sur Google (280+ avis)" },
+        lien: "https://restaurantguru.com/Paimpol",
+        lienLabel: "Restaurants de Paimpol",
+      },
+      {
+        nom: "OSTIUM — 4,7/5",
+        detail: "2 chemin de Kergroas. Plus de 80 avis.",
+        prix: { adulte: 0, enfant: 0, label: "4,7/5 sur Google (80+ avis)" },
+        lien: "https://restaurantguru.com/Paimpol",
+        lienLabel: "Restaurants de Paimpol",
+      },
+    ],
+    pratique: [
+      "Juste sous le seuil, si tout est complet : Le P'tit Bistrot et le Bar à Huîtres Chez Arin, à 4,6/5.",
+      "Se combine avec l'abbaye de Beauport (2 km) ou l'embarquement pour Bréhat.",
+      "Les notes viennent d'un agrégateur d'avis Google : à recouper avant de réserver.",
+    ],
+    sources: [
+      { titre: "Restaurants de Paimpol — Restaurant Guru", url: "https://restaurantguru.com/Paimpol" },
+      { titre: "Le Fifties — fiche et note", url: "https://restaurantguru.com/Le-Fifties-Paimpol" },
+      { titre: "Restaurants de Paimpol — Tripadvisor", url: "https://www.tripadvisor.com/Restaurants-g488278-Paimpol_Cotes_d_Armor_Brittany.html" },
     ],
   },
 
@@ -1922,7 +2041,16 @@ function prixMini(f) {
 function labelPrix(f) {
   const p = prixMini(f);
   if (f.perso) return f.prixTexte || (p ? `${euro(p)}/adulte` : "Gratuit");
+  // Les restaurants n'ont pas de billet d'entrée : on affiche leur budget.
+  if (f.budget) return f.budget;
   return p === 0 ? "Gratuit" : `dès ${euro(p)}/adulte`;
+}
+
+/* Pastille de note : toujours accompagnée de sa plateforme et du nombre
+   d'avis — une note hors contexte ne veut rien dire. */
+function labelNote(note) {
+  const val = note.valeur.toLocaleString("fr-FR", { minimumFractionDigits: 1 });
+  return `★ ${val} · ${note.sur}${note.avis ? ` (${note.avis})` : ""}`;
 }
 
 function refsDuSlot(slot) {
@@ -2075,6 +2203,7 @@ function renderGrid() {
         </div>
         <div class="card-body">
           <div class="meta">
+            ${f.note ? `<span class="chip note">${esc(labelNote(f.note))}</span>` : ""}
             <span class="chip price">${esc(labelPrix(f))}</span>
             ${f.trajet.min != null ? `<span class="chip">${f.trajet.km === 0 ? "sur place" : `~${f.trajet.min} min · ${f.trajet.km} km`}</span>` : ""}
             ${f.duree ? `<span class="chip">${esc(f.duree)}</span>` : ""}
@@ -2302,7 +2431,9 @@ function corpsFicheCatalogue(f) {
     return `
       <div class="spot">
         <div class="spot-head">
-          <input type="checkbox" data-spot="${i}" ${s.prix.optionnel ? "" : "checked"} aria-label="Compter ${esc(s.nom)}">
+          ${f.cat === "resto"
+            ? ""
+            : `<input type="checkbox" data-spot="${i}" ${s.prix.optionnel ? "" : "checked"} aria-label="Compter ${esc(s.nom)}">`}
           <div>
             <div class="spot-name">${esc(s.nom)}</div>
             <div class="spot-detail">${esc(s.detail)}</div>
@@ -2317,28 +2448,37 @@ function corpsFicheCatalogue(f) {
     <div class="block">
       <p class="lede">${esc(f.resume)}</p>
       <div class="meta" style="margin-top:12px">
+        ${f.note ? `<a class="chip note" href="${esc(f.note.url)}" target="_blank" rel="noopener">${esc(labelNote(f.note))} ↗</a>` : ""}
         <span class="chip">${f.trajet.km === 0 ? "Sur place" : `🚗 ~${f.trajet.min} min · ${f.trajet.km} km depuis Binic`}</span>
         <span class="chip">⏱ ${esc(f.duree)}</span>
       </div>
       ${f.trajet.note ? `<p class="spot-detail" style="margin-top:8px">${esc(f.trajet.note)}</p>` : ""}
+      ${f.note ? `<p class="spot-detail" style="margin-top:6px">Note relevée le ${VERIF} — les avis bougent, à recouper avant de réserver.</p>` : ""}
     </div>
 
     <div class="block">
-      <h3>À voir &amp; tarifs</h3>
-      <div class="calc">
-        <label for="nb-a">Adultes</label>
-        <input type="number" id="nb-a" min="0" max="30" value="${localStorage.getItem("bretagne.nbA") || 2}">
-        <label for="nb-e">Enfants</label>
-        <input type="number" id="nb-e" min="0" max="30" value="${localStorage.getItem("bretagne.nbE") || 0}">
-      </div>
-      ${spots}
-      <div class="total">
-        <span>Total estimé</span>
-        <span style="text-align:right">
-          <span id="total-val">—</span>
-          <small>hors repas, essence et parkings non listés</small>
-        </span>
-      </div>
+      ${f.cat === "resto"
+        ? `<h3>La table</h3>
+           ${spots}
+           <p class="spot-detail" style="margin:12px 0 0">
+             Pas de calcul possible : ces établissements ne publient pas leurs prix.
+             Les repas ne sont pas comptés dans le total estimé de la journée.
+           </p>`
+        : `<h3>À voir &amp; tarifs</h3>
+           <div class="calc">
+             <label for="nb-a">Adultes</label>
+             <input type="number" id="nb-a" min="0" max="30" value="${localStorage.getItem("bretagne.nbA") || 2}">
+             <label for="nb-e">Enfants</label>
+             <input type="number" id="nb-e" min="0" max="30" value="${localStorage.getItem("bretagne.nbE") || 0}">
+           </div>
+           ${spots}
+           <div class="total">
+             <span>Total estimé</span>
+             <span style="text-align:right">
+               <span id="total-val">—</span>
+               <small>hors repas, essence et parkings non listés</small>
+             </span>
+           </div>`}
     </div>
 
     <div class="block">
@@ -2415,7 +2555,7 @@ function recalcTotal(f) {
 }
 
 function brancherFiche(f) {
-  if (!f.perso) {
+  if (!f.perso && f.cat !== "resto") {
     $("#nb-a").addEventListener("input", () => recalcTotal(f));
     $("#nb-e").addEventListener("input", () => recalcTotal(f));
     document.querySelectorAll("[data-spot]").forEach((box) =>
