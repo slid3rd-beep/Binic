@@ -269,6 +269,68 @@ function toutesLesFiches() {
   return [...proches, ...perso];
 }
 
+/* ---------------- tri et filtres ---------------- */
+
+const FILTRES = [
+  { id: "tout", nom: "Tout", garde: () => true },
+  { id: "sortie", nom: "Sorties", garde: (f) => !f.perso && f.cat === "sortie" },
+  { id: "resto", nom: "Restos", garde: (f) => f.cat === "resto" },
+  { id: "marche", nom: "Marchés", garde: (f) => f.cat === "marche" },
+  { id: "perso", nom: "Ajoutés", garde: (f) => f.perso },
+];
+
+/* Les valeurs manquantes ne valent pas zéro : un lieu sans note n'est pas
+   un lieu noté 0, et un lieu ajouté n'a pas de distance connue. On les
+   renvoie en fin de liste au lieu de les faire remonter à tort. */
+const APRES_TOUT = Number.POSITIVE_INFINITY;
+
+const TRIS = {
+  distance: (f) => (f.trajet.min == null ? APRES_TOUT : f.trajet.min),
+  prix: (f) => prixMini(f),
+  note: (f) => (f.note ? -f.note.valeur : APRES_TOUT),
+  recent: (f) => (f.perso ? -f.ts : APRES_TOUT),
+  nom: (f) => f.nom.toLocaleLowerCase("fr"),
+};
+
+function triCourant() {
+  return TRIS[localStorage.getItem("bretagne.tri")] ? localStorage.getItem("bretagne.tri") : "distance";
+}
+
+function filtreCourant() {
+  const val = localStorage.getItem("bretagne.filtre");
+  return FILTRES.some((f) => f.id === val) ? val : "tout";
+}
+
+function trierEtFiltrer(fiches) {
+  const filtre = FILTRES.find((f) => f.id === filtreCourant());
+  const cle = TRIS[triCourant()];
+
+  return fiches
+    .filter(filtre.garde)
+    .sort((a, b) => {
+      const va = cle(a);
+      const vb = cle(b);
+      if (va < vb) return -1;
+      if (va > vb) return 1;
+      // À égalité, l'ordre alphabétique — pour que l'affichage ne bouge pas
+      // d'un rendu à l'autre.
+      return a.nom.localeCompare(b.nom, "fr");
+    });
+}
+
+function renderBarreTri(fiches) {
+  $("#tri-filtres").innerHTML = FILTRES.map((f) => {
+    const n = fiches.filter(f.garde).length;
+    if (!n && f.id !== "tout") return "";
+    return `<button class="tri-chip${f.id === filtreCourant() ? " is-on" : ""}"
+              data-filtre="${f.id}" ${f.id === filtreCourant() ? 'aria-pressed="true"' : 'aria-pressed="false"'}>
+              ${f.nom} <span class="tri-n">${n}</span>
+            </button>`;
+  }).join("");
+
+  $("#tri-ordre").value = triCourant();
+}
+
 /* Prix plancher par adulte, pour les pastilles et les totaux de journée. */
 function prixMini(f) {
   if (f.perso) return f.prixAdulte || 0;
@@ -344,6 +406,50 @@ function majBoutonPrenom() {
   $("#who").textContent = moi ? `👤 ${moi}` : "👤 Qui es-tu ?";
 }
 
+/* ---------------- marchés et brocantes ---------------- */
+
+/* Un marché revient chaque semaine, une brocante n'a lieu qu'une fois :
+   le premier se retrouve par jour de la semaine, la seconde par date.
+   Les deux sont bornés par le même rayon que le reste de l'app. */
+
+function marchesDuJour(isoDate) {
+  const j = new Date(`${isoDate}T12:00:00`).getDay();
+  return MARCHES.filter((m) => m.jour === j && m.min < RAYON_MAX_MIN);
+}
+
+function brocantesDuJour(isoDate) {
+  return BROCANTES.filter((b) => b.date === isoDate && b.min < RAYON_MAX_MIN);
+}
+
+function ligneEvenements(isoDate) {
+  const evts = [
+    ...marchesDuJour(isoDate).map((m) => ({
+      ref: "d:marches",
+      emoji: "🧺",
+      texte: `Marché ${m.commune}`,
+      detail: `${m.horaire}${m.creneau === "soir" ? " · le soir" : ""}`,
+    })),
+    ...brocantesDuJour(isoDate).map((b) => ({
+      ref: "d:brocantes",
+      emoji: "🪑",
+      texte: `Brocante ${b.commune}`,
+      detail: b.horaire || "",
+    })),
+  ];
+
+  if (!evts.length) return "";
+
+  return `<div class="jour-evenements">${evts
+    .map(
+      (e) => `<button class="evt" data-ouvrir="${e.ref}">
+        <span>${e.emoji}</span>
+        <span class="evt-nom">${esc(e.texte)}</span>
+        ${e.detail ? `<span class="evt-h">${esc(e.detail)}</span>` : ""}
+      </button>`
+    )
+    .join("")}</div>`;
+}
+
 /* ---------------- vue semaine ---------------- */
 
 function renderSemaine() {
@@ -415,6 +521,7 @@ function renderSemaine() {
             ${arrivee ? `<span class="jour-tag">${arrivee}</span>` : ""}
             ${total > 0 ? `<span class="jour-total">≈ ${euro(total)}/adulte</span>` : ""}
           </header>
+          ${ligneEvenements(jour)}
           ${vide ? lignesVides : lignes}
         </section>`;
     })
@@ -434,7 +541,10 @@ function renderGrid() {
        Pour les revoir, monter <code>RAYON_MAX_MIN</code> dans <code>data.js</code>.`
     : "";
 
-  $("#grid").innerHTML = toutesLesFiches()
+  const fiches = toutesLesFiches();
+  renderBarreTri(fiches);
+
+  $("#grid").innerHTML = trierEtFiltrer(fiches)
     .map((f) => {
       const nb = commentairesDe(f.id).length;
       const place = Object.entries(state.creneaux).filter(([, refs]) => refs[f.ref]).length;
@@ -463,7 +573,8 @@ function renderGrid() {
         </div>
       </button>`;
     })
-    .join("");
+    .join("") ||
+    `<p class="empty" style="grid-column:1/-1">Aucun lieu dans cette catégorie.</p>`;
 }
 
 /* ---------------- sélecteur de lieu ---------------- */
@@ -475,8 +586,11 @@ function ouvrirPicker(slot) {
   $("#picker-title").textContent = `${nomCre} du ${jourLisible(jour)}`;
 
   const dejaLa = new Set(refsDuSlot(slot));
+  // Le sélecteur ignore le filtre de l'onglet Lieux : quand on remplit un
+  // créneau, on veut tout avoir sous la main. Ordre par distance.
   $("#picker-list").innerHTML =
     toutesLesFiches()
+      .sort((a, b) => TRIS.distance(a) - TRIS.distance(b) || a.nom.localeCompare(b.nom, "fr"))
       .map((f) => `
         <button class="picker-item" data-choisir="${esc(f.ref)}" ${dejaLa.has(f.ref) ? "disabled" : ""}>
           <span class="picker-pastille" style="background:${f.couleur}">${f.emoji}</span>
@@ -1018,6 +1132,12 @@ function brancherGlobal() {
       return;
     }
 
+    const chip = ev.target.closest("[data-filtre]");
+    if (chip) {
+      localStorage.setItem("bretagne.filtre", chip.dataset.filtre);
+      return renderGrid();
+    }
+
     if (ev.target.closest("[data-nouveau]")) {
       const slot = cibleCreneau;
       fermerPicker();
@@ -1029,6 +1149,11 @@ function brancherGlobal() {
   $("#picker-close").addEventListener("click", fermerPicker);
   $("#picker").addEventListener("click", (ev) => { if (ev.target.id === "picker") fermerPicker(); });
   $("#add-place").addEventListener("click", () => ouvrirFormulaire(null));
+
+  $("#tri-ordre").addEventListener("change", (ev) => {
+    localStorage.setItem("bretagne.tri", ev.target.value);
+    renderGrid();
+  });
 
   document.addEventListener("keydown", (ev) => {
     if (ev.key !== "Escape") return;

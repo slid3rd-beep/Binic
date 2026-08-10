@@ -333,6 +333,96 @@ main { padding: 16px; max-width: 940px; margin: 0 auto; }
 
 .jour-total { margin-left: auto; font-size: 12.5px; color: var(--ink-soft); font-weight: 650; }
 
+/* Marchés et brocantes : une information de contexte, pas un créneau posé —
+   d'où le trait discret et l'absence de couleur pleine. */
+.jour-evenements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 9px 14px;
+  background: var(--card-alt);
+  border-bottom: 1px solid var(--line);
+}
+
+.evt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px dashed var(--line-strong);
+  border-radius: 7px;
+  padding: 4px 9px;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--ink);
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.evt-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+
+.evt-h { color: var(--ink-soft); font-size: 11.5px; white-space: nowrap; }
+
+.jour-vide .jour-evenements { background: transparent; border-bottom: 0; padding-top: 2px; padding-bottom: 4px; }
+
+/* ---------- barre de tri ---------- */
+
+.tri {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.tri-filtres {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.tri-filtres::-webkit-scrollbar { display: none; }
+
+.tri-chip {
+  flex: 0 0 auto;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tri-chip.is-on {
+  background: var(--sea);
+  border-color: var(--sea);
+  color: var(--sea-ink);
+}
+
+.tri-n { opacity: 0.65; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+.tri-ordre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.tri-ordre select {
+  font: inherit;
+  font-size: 14px;
+  padding: 7px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: var(--card-alt);
+  color: var(--ink);
+}
+
 .ligne { display: flex; align-items: stretch; border-top: 1px solid var(--line); }
 
 .ligne:first-of-type { border-top: 0; }
@@ -941,6 +1031,21 @@ textarea {
 
   <section id="view-destinations" class="view" hidden>
     <button class="btn add-place" id="add-place" type="button">+ Ajouter un lieu</button>
+
+    <div class="tri">
+      <div class="tri-filtres" id="tri-filtres" role="group" aria-label="Filtrer par catégorie"></div>
+      <label class="tri-ordre">
+        <span>Trier par</span>
+        <select id="tri-ordre" aria-label="Ordre de tri">
+          <option value="distance">Distance</option>
+          <option value="note">Note</option>
+          <option value="prix">Prix</option>
+          <option value="nom">Nom</option>
+          <option value="recent">Ajout récent</option>
+        </select>
+      </label>
+    </div>
+
     <div id="grid" class="grid"></div>
     <p class="footnote" id="hors-rayon"></p>
     <p class="footnote">
@@ -1781,6 +1886,133 @@ const DESTINATIONS = [
   },
 ];
 
+/* ------------------------------------------------------------------
+   Marchés hebdomadaires du secteur.
+   `jour` suit getDay() : 0 = dimanche … 6 = samedi.
+   Jours vérifiés le 10/08/2026 auprès des mairies, offices de tourisme
+   et annuaires communaux — voir MARCHES_SOURCES plus bas.
+   ------------------------------------------------------------------ */
+
+const MARCHES = [
+  { commune: "Pontrieux", jour: 1, horaire: "matin", lieu: "Centre bourg", min: 45, creneau: "matin" },
+  { commune: "Saint-Quay-Portrieux", jour: 1, horaire: "8 h 30 – 13 h 30", lieu: "Quai Richet", min: 12, creneau: "matin" },
+  { commune: "Erquy", jour: 1, horaire: "17 h – 21 h (l'été)", lieu: "Marché du soir", min: 52, creneau: "soir" },
+
+  { commune: "Paimpol", jour: 2, horaire: "matin", lieu: "Place du Martray et les quais", min: 35, creneau: "matin" },
+  { commune: "Étables-sur-Mer", jour: 2, horaire: "matin", lieu: "Place Kersaint Gilly et rue Touroux", min: 5, creneau: "matin" },
+  { commune: "Pléneuf", jour: 2, horaire: "8 h – 13 h", lieu: "Place de Nantois", min: 48, creneau: "matin" },
+
+  { commune: "Saint-Brieuc", jour: 3, horaire: "8 h – 13 h", lieu: "Places de la Résistance, du Martray et de la Grille — halles Georges Brassens. 80 exposants", min: 20, creneau: "matin" },
+  { commune: "Tréguier", jour: 3, horaire: "matin", lieu: "Place du Martray — l'un des plus beaux du secteur", min: 50, creneau: "matin" },
+  { commune: "Plouha", jour: 3, horaire: "matin", lieu: "Place de l'église", min: 20, creneau: "matin" },
+
+  { commune: "Binic", jour: 4, horaire: "8 h – 13 h", lieu: "Place Le Pomellec et rue Joffre — en juillet-août il s'étend jusqu'aux quais de Courcy, Jean Bart et Surcouf", min: 0, creneau: "matin" },
+
+  { commune: "Saint-Quay-Portrieux", jour: 5, horaire: "8 h 30 – 13 h 30", lieu: "Place de l'église et rue Jeanne d'Arc", min: 12, creneau: "matin" },
+  { commune: "Val-André", jour: 5, horaire: "8 h – 13 h", lieu: "Place de l'Amirauté", min: 48, creneau: "matin" },
+  { commune: "Lanvollon", jour: 5, horaire: "matin", lieu: "Centre-ville", min: 20, creneau: "matin" },
+
+  { commune: "Saint-Brieuc", jour: 6, horaire: "8 h – 13 h", lieu: "Le grand jour : plus de 100 exposants", min: 20, creneau: "matin" },
+  { commune: "Erquy", jour: 6, horaire: "8 h – 13 h", lieu: "Sous la halle et alentours", min: 52, creneau: "matin" },
+  { commune: "Dahouët", jour: 6, horaire: "8 h – 13 h", lieu: "Quai des Terre-Neuvas", min: 45, creneau: "matin" },
+
+  { commune: "Étables-sur-Mer", jour: 0, horaire: "matin", lieu: "Place Kersaint Gilly", min: 5, creneau: "matin" },
+];
+
+const MARCHES_SOURCES = [
+  { titre: "Le port, les plages, les marchés — ville de Binic-Étables", url: "https://www.binic-etables-sur-mer.fr/le-port-les-plages-les-marches/" },
+  { titre: "Marchés hebdomadaires — ville de Saint-Brieuc", url: "https://www.saint-brieuc.bzh/au-quotidien/commerces-et-marches/marches-et-ventes-ambulantes" },
+  { titre: "Marchés — office de tourisme Cap d'Erquy-Val André", url: "https://www.capderquy-valandre.com/decouvrir/gastronomie/les-marches" },
+  { titre: "Marchés à Saint-Quay-Portrieux", url: "https://www.saintquayportrieux.com/commerces-marches/marches/" },
+  { titre: "Liste des marchés des Côtes d'Armor", url: "https://www.cotesdarmor.com/a-voir-a-faire/gastronomie-bretonne/jours-de-marches/liste-des-marches/" },
+];
+
+/* ------------------------------------------------------------------
+   Brocantes et vide-greniers datés. Une brocante n'a lieu qu'une fois :
+   elle s'affiche sur sa date, et disparaît d'elle-même une fois passée.
+   Relevé le 10/08/2026 — le calendrier bouge, vérifier sur brocabrac.
+   ------------------------------------------------------------------ */
+
+const BROCANTES = [
+  { date: "2026-08-08", commune: "Erquy", nom: "Vide-grenier", horaire: "", min: 52 },
+  { date: "2026-08-08", commune: "Plouha", nom: "Vide-grenier", horaire: "", min: 20 },
+  { date: "2026-08-08", commune: "Saint-Brieuc", nom: "Vide-grenier", horaire: "", min: 20 },
+  { date: "2026-08-08", commune: "Lantic", nom: "Vide-grenier", horaire: "", min: 10 },
+
+  { date: "2026-08-09", commune: "Pléneuf-Val-André", nom: "Vide-grenier, place du 9 Avril 1944", horaire: "", min: 48 },
+  { date: "2026-08-09", commune: "Plouha", nom: "Vide-grenier, 6 le Run", horaire: "dès 9 h 30", min: 20 },
+  { date: "2026-08-09", commune: "Lantic", nom: "Vide-grenier sous barnum", horaire: "dès 9 h", min: 10 },
+
+  { date: "2026-08-13", commune: "Binic-Étables-sur-Mer", nom: "Bouquinistes et brocante — Festival Paimpol Mon Amour", horaire: "dès 10 h", min: 0 },
+
+  { date: "2026-08-14", commune: "Saint-Quay-Portrieux", nom: "Brocante", horaire: "dès 9 h", min: 12 },
+];
+
+const BROCANTES_SOURCES = [
+  { titre: "Vide-greniers et brocantes des Côtes-d'Armor en août — Brocmania", url: "https://www.brocmania.fr/vide-greniers/cotes-d-armor-22/aout" },
+  { titre: "Brocantes et vide-greniers du 22 — Brocabrac", url: "https://brocabrac.fr/22/" },
+  { titre: "Agenda brocantes des Côtes-d'Armor — Fest.fr", url: "https://www.fest.fr/agenda/cotes-d-armor/brocantes-bourses-et-vide-greniers" },
+];
+
+/* Deux fiches synthétiques, construites à partir des tableaux ci-dessus :
+   elles se posent dans un créneau comme n'importe quel autre lieu. */
+
+const JOURS_NOMS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+
+DESTINATIONS.push({
+  id: "marches",
+  nom: "Marchés du coin",
+  sousTitre: "Un marché par jour, tous les jours de la semaine",
+  emoji: "🧺",
+  couleur: "#6b5a2b",
+  cat: "marche",
+  budget: "Entrée libre",
+  trajet: { km: null, min: 0, note: "Selon la commune — de Binic même à 52 min pour Erquy" },
+  duree: "Une matinée",
+  resume:
+    "Il y a un marché tous les jours dans le secteur, et deux les mercredis et samedis. Le plus beau du coin est celui de Tréguier le mercredi ; le plus grand celui de Saint-Brieuc le samedi, avec plus de cent exposants ; et le vôtre, à Binic le jeudi, descend jusqu'aux quais en juillet-août.",
+  aVoir: MARCHES.map((m) => ({
+    nom: `${JOURS_NOMS[m.jour].charAt(0).toUpperCase() + JOURS_NOMS[m.jour].slice(1)} — ${m.commune}`,
+    detail: `${m.lieu}. ${m.min === 0 ? "Sur place." : `~${m.min} min de Binic.`}`,
+    prix: { adulte: 0, enfant: 0, label: m.horaire || "Le matin" },
+    lien: "https://www.cotesdarmor.com/a-voir-a-faire/gastronomie-bretonne/jours-de-marches/liste-des-marches/",
+    lienLabel: "Liste officielle des marchés",
+  })),
+  pratique: [
+    "Le marché du soir d'Erquy, le lundi de 17 h à 21 h l'été, est le seul qui ne mange pas une matinée.",
+    "Tréguier le mercredi et Saint-Brieuc le samedi valent le déplacement en eux-mêmes.",
+    "Arriver avant 11 h : les producteurs plient tôt en août.",
+  ],
+  sources: MARCHES_SOURCES,
+});
+
+DESTINATIONS.push({
+  id: "brocantes",
+  nom: "Brocantes de la semaine",
+  sousTitre: "Vide-greniers datés, à moins d'une heure",
+  emoji: "🪑",
+  couleur: "#5c5a7a",
+  cat: "marche",
+  budget: "Entrée libre",
+  trajet: { km: null, min: 0, note: "Selon la commune" },
+  duree: "Une matinée",
+  resume:
+    "Les vide-greniers et brocantes repérés autour de Binic pour la période. Contrairement aux marchés, ce sont des dates uniques : celle du jeudi 13 août se tient à Binic-Étables même, dans le cadre du Festival Paimpol Mon Amour.",
+  aVoir: BROCANTES.map((b) => ({
+    nom: `${new Date(`${b.date}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })} — ${b.commune}`,
+    detail: `${b.nom}. ${b.min === 0 ? "Sur place." : `~${b.min} min de Binic.`}`,
+    prix: { adulte: 0, enfant: 0, label: b.horaire || "Horaire non précisé" },
+    lien: "https://brocabrac.fr/22/",
+    lienLabel: "Vérifier sur Brocabrac",
+  })),
+  pratique: [
+    "Le calendrier des vide-greniers bouge jusqu'au dernier moment : vérifier la veille.",
+    "Le 13 août à Binic est le plus pratique — c'est à pied.",
+    "Les horaires manquants n'étaient pas publiés : compter un début vers 8-9 h.",
+  ],
+  sources: BROCANTES_SOURCES,
+});
+
 /* ---------------------------------------------------------------
    Nos journées en Bretagne — application statique, sans build.
    État partagé : lieux ajoutés, créneaux de la semaine, commentaires.
@@ -2052,6 +2284,68 @@ function toutesLesFiches() {
   return [...proches, ...perso];
 }
 
+/* ---------------- tri et filtres ---------------- */
+
+const FILTRES = [
+  { id: "tout", nom: "Tout", garde: () => true },
+  { id: "sortie", nom: "Sorties", garde: (f) => !f.perso && f.cat === "sortie" },
+  { id: "resto", nom: "Restos", garde: (f) => f.cat === "resto" },
+  { id: "marche", nom: "Marchés", garde: (f) => f.cat === "marche" },
+  { id: "perso", nom: "Ajoutés", garde: (f) => f.perso },
+];
+
+/* Les valeurs manquantes ne valent pas zéro : un lieu sans note n'est pas
+   un lieu noté 0, et un lieu ajouté n'a pas de distance connue. On les
+   renvoie en fin de liste au lieu de les faire remonter à tort. */
+const APRES_TOUT = Number.POSITIVE_INFINITY;
+
+const TRIS = {
+  distance: (f) => (f.trajet.min == null ? APRES_TOUT : f.trajet.min),
+  prix: (f) => prixMini(f),
+  note: (f) => (f.note ? -f.note.valeur : APRES_TOUT),
+  recent: (f) => (f.perso ? -f.ts : APRES_TOUT),
+  nom: (f) => f.nom.toLocaleLowerCase("fr"),
+};
+
+function triCourant() {
+  return TRIS[localStorage.getItem("bretagne.tri")] ? localStorage.getItem("bretagne.tri") : "distance";
+}
+
+function filtreCourant() {
+  const val = localStorage.getItem("bretagne.filtre");
+  return FILTRES.some((f) => f.id === val) ? val : "tout";
+}
+
+function trierEtFiltrer(fiches) {
+  const filtre = FILTRES.find((f) => f.id === filtreCourant());
+  const cle = TRIS[triCourant()];
+
+  return fiches
+    .filter(filtre.garde)
+    .sort((a, b) => {
+      const va = cle(a);
+      const vb = cle(b);
+      if (va < vb) return -1;
+      if (va > vb) return 1;
+      // À égalité, l'ordre alphabétique — pour que l'affichage ne bouge pas
+      // d'un rendu à l'autre.
+      return a.nom.localeCompare(b.nom, "fr");
+    });
+}
+
+function renderBarreTri(fiches) {
+  $("#tri-filtres").innerHTML = FILTRES.map((f) => {
+    const n = fiches.filter(f.garde).length;
+    if (!n && f.id !== "tout") return "";
+    return `<button class="tri-chip${f.id === filtreCourant() ? " is-on" : ""}"
+              data-filtre="${f.id}" ${f.id === filtreCourant() ? 'aria-pressed="true"' : 'aria-pressed="false"'}>
+              ${f.nom} <span class="tri-n">${n}</span>
+            </button>`;
+  }).join("");
+
+  $("#tri-ordre").value = triCourant();
+}
+
 /* Prix plancher par adulte, pour les pastilles et les totaux de journée. */
 function prixMini(f) {
   if (f.perso) return f.prixAdulte || 0;
@@ -2127,6 +2421,50 @@ function majBoutonPrenom() {
   $("#who").textContent = moi ? `👤 ${moi}` : "👤 Qui es-tu ?";
 }
 
+/* ---------------- marchés et brocantes ---------------- */
+
+/* Un marché revient chaque semaine, une brocante n'a lieu qu'une fois :
+   le premier se retrouve par jour de la semaine, la seconde par date.
+   Les deux sont bornés par le même rayon que le reste de l'app. */
+
+function marchesDuJour(isoDate) {
+  const j = new Date(`${isoDate}T12:00:00`).getDay();
+  return MARCHES.filter((m) => m.jour === j && m.min < RAYON_MAX_MIN);
+}
+
+function brocantesDuJour(isoDate) {
+  return BROCANTES.filter((b) => b.date === isoDate && b.min < RAYON_MAX_MIN);
+}
+
+function ligneEvenements(isoDate) {
+  const evts = [
+    ...marchesDuJour(isoDate).map((m) => ({
+      ref: "d:marches",
+      emoji: "🧺",
+      texte: `Marché ${m.commune}`,
+      detail: `${m.horaire}${m.creneau === "soir" ? " · le soir" : ""}`,
+    })),
+    ...brocantesDuJour(isoDate).map((b) => ({
+      ref: "d:brocantes",
+      emoji: "🪑",
+      texte: `Brocante ${b.commune}`,
+      detail: b.horaire || "",
+    })),
+  ];
+
+  if (!evts.length) return "";
+
+  return `<div class="jour-evenements">${evts
+    .map(
+      (e) => `<button class="evt" data-ouvrir="${e.ref}">
+        <span>${e.emoji}</span>
+        <span class="evt-nom">${esc(e.texte)}</span>
+        ${e.detail ? `<span class="evt-h">${esc(e.detail)}</span>` : ""}
+      </button>`
+    )
+    .join("")}</div>`;
+}
+
 /* ---------------- vue semaine ---------------- */
 
 function renderSemaine() {
@@ -2198,6 +2536,7 @@ function renderSemaine() {
             ${arrivee ? `<span class="jour-tag">${arrivee}</span>` : ""}
             ${total > 0 ? `<span class="jour-total">≈ ${euro(total)}/adulte</span>` : ""}
           </header>
+          ${ligneEvenements(jour)}
           ${vide ? lignesVides : lignes}
         </section>`;
     })
@@ -2217,7 +2556,10 @@ function renderGrid() {
        Pour les revoir, monter <code>RAYON_MAX_MIN</code> dans <code>data.js</code>.`
     : "";
 
-  $("#grid").innerHTML = toutesLesFiches()
+  const fiches = toutesLesFiches();
+  renderBarreTri(fiches);
+
+  $("#grid").innerHTML = trierEtFiltrer(fiches)
     .map((f) => {
       const nb = commentairesDe(f.id).length;
       const place = Object.entries(state.creneaux).filter(([, refs]) => refs[f.ref]).length;
@@ -2246,7 +2588,8 @@ function renderGrid() {
         </div>
       </button>`;
     })
-    .join("");
+    .join("") ||
+    `<p class="empty" style="grid-column:1/-1">Aucun lieu dans cette catégorie.</p>`;
 }
 
 /* ---------------- sélecteur de lieu ---------------- */
@@ -2258,8 +2601,11 @@ function ouvrirPicker(slot) {
   $("#picker-title").textContent = `${nomCre} du ${jourLisible(jour)}`;
 
   const dejaLa = new Set(refsDuSlot(slot));
+  // Le sélecteur ignore le filtre de l'onglet Lieux : quand on remplit un
+  // créneau, on veut tout avoir sous la main. Ordre par distance.
   $("#picker-list").innerHTML =
     toutesLesFiches()
+      .sort((a, b) => TRIS.distance(a) - TRIS.distance(b) || a.nom.localeCompare(b.nom, "fr"))
       .map((f) => `
         <button class="picker-item" data-choisir="${esc(f.ref)}" ${dejaLa.has(f.ref) ? "disabled" : ""}>
           <span class="picker-pastille" style="background:${f.couleur}">${f.emoji}</span>
@@ -2801,6 +3147,12 @@ function brancherGlobal() {
       return;
     }
 
+    const chip = ev.target.closest("[data-filtre]");
+    if (chip) {
+      localStorage.setItem("bretagne.filtre", chip.dataset.filtre);
+      return renderGrid();
+    }
+
     if (ev.target.closest("[data-nouveau]")) {
       const slot = cibleCreneau;
       fermerPicker();
@@ -2812,6 +3164,11 @@ function brancherGlobal() {
   $("#picker-close").addEventListener("click", fermerPicker);
   $("#picker").addEventListener("click", (ev) => { if (ev.target.id === "picker") fermerPicker(); });
   $("#add-place").addEventListener("click", () => ouvrirFormulaire(null));
+
+  $("#tri-ordre").addEventListener("change", (ev) => {
+    localStorage.setItem("bretagne.tri", ev.target.value);
+    renderGrid();
+  });
 
   document.addEventListener("keydown", (ev) => {
     if (ev.key !== "Escape") return;

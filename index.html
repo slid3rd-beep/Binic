@@ -47,6 +47,21 @@
 
   <section id="view-destinations" class="view" hidden>
     <button class="btn add-place" id="add-place" type="button">+ Ajouter un lieu</button>
+
+    <div class="tri">
+      <div class="tri-filtres" id="tri-filtres" role="group" aria-label="Filtrer par catégorie"></div>
+      <label class="tri-ordre">
+        <span>Trier par</span>
+        <select id="tri-ordre" aria-label="Ordre de tri">
+          <option value="distance">Distance</option>
+          <option value="note">Note</option>
+          <option value="prix">Prix</option>
+          <option value="nom">Nom</option>
+          <option value="recent">Ajout récent</option>
+        </select>
+      </label>
+    </div>
+
     <div id="grid" class="grid"></div>
     <p class="footnote" id="hors-rayon"></p>
     <p class="footnote">

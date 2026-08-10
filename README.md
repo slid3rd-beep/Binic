@@ -8,13 +8,16 @@ Côtes-d'Armor, base à **Binic-Étables-sur-Mer**.
   On pose un lieu d'un geste, on le **déplace au doigt** d'un créneau à l'autre,
   et chaque journée affiche son coût estimé. Les journées vides se replient pour
   que la semaine entière tienne sur un écran.
-- **12 lieux à moins d'une heure de route de Binic**, plus **vos propres ajouts** :
+- **14 lieux à moins d'une heure de route de Binic**, plus **vos propres ajouts** :
   une info prise à l'office de tourisme se saisit en 30 secondes (nom, tarif,
   durée, lien, et d'où vient l'info).
 - Pour chaque lieu du catalogue : ce qu'il y a à voir, **les tarifs officiels** avec
   le lien vers la billetterie, les infos pratiques et **les sources**.
 - Une **calculette** : nombre d'adultes / d'enfants, cases à cocher sur les visites,
   total estimé.
+- Les **jours de marché** du secteur et les **brocantes** datées, affichés
+  directement sur la bonne journée de l'agenda — sans rien avoir à ouvrir.
+- Un **tri** de la liste : filtre par catégorie et ordre au choix.
 - Des **commentaires** par lieu, partagés entre les téléphones du groupe.
 
 Zéro dépendance, zéro build : que des fichiers statiques, servis tels quels.
@@ -145,6 +148,45 @@ changer les valeurs :
 
 La constante `VERIF` en haut du fichier est la date de relevé des tarifs affichée
 partout dans l'app : la mettre à jour quand vous re-vérifiez les prix.
+
+### Marchés et brocantes
+
+Deux tableaux séparés en bas de `data.js`, parce qu'ils n'obéissent pas à la même
+logique : un **marché** revient chaque semaine, une **brocante** a lieu une fois.
+
+```js
+// MARCHES — `jour` suit getDay() : 0 = dimanche, 1 = lundi … 6 = samedi
+{ commune: "Binic", jour: 4, horaire: "8 h – 13 h",
+  lieu: "Place Le Pomellec et rue Joffre",
+  min: 0,              // minutes depuis Binic, filtré par RAYON_MAX_MIN
+  creneau: "matin" },  // "soir" pour les marchés nocturnes
+
+// BROCANTES — datées, elles disparaissent d'elles-mêmes une fois passées
+{ date: "2026-08-13", commune: "Binic-Étables-sur-Mer",
+  nom: "Bouquinistes et brocante — Festival Paimpol Mon Amour",
+  horaire: "dès 10 h", min: 0 },
+```
+
+Les deux s'affichent automatiquement sur la bonne journée de l'agenda, et
+alimentent les fiches « Marchés du coin » et « Brocantes de la semaine » — il n'y
+a rien à saisir deux fois. Les jours de marché ont été vérifiés le 10/08/2026
+auprès des mairies et offices de tourisme ; le calendrier des vide-greniers,
+lui, bouge jusqu'au dernier moment.
+
+### Tri de la liste
+
+Dans l'onglet *Lieux* : filtre par catégorie (Tout · Sorties · Restos · Marchés ·
+Ajoutés, avec le compte de chacune) et ordre au choix — distance, note, prix, nom,
+ajout récent.
+
+Deux partis pris. Les valeurs manquantes ne valent pas zéro : un lieu sans note
+n'est pas un lieu noté 0, il part **en fin de liste** plutôt que de remonter à
+tort — même chose pour un lieu ajouté sans distance connue. Et le choix de tri
+est rangé dans `localStorage`, pas dans l'état partagé : c'est un confort
+d'affichage personnel, chacun trie comme il veut sans l'imposer aux autres.
+
+Le sélecteur qui s'ouvre sur un créneau ignore volontairement le filtre : quand
+on remplit une journée, on veut tout avoir sous la main.
 
 ### Rayon d'action
 

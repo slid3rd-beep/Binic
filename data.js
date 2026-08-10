@@ -782,3 +782,130 @@ const DESTINATIONS = [
     ],
   },
 ];
+
+/* ------------------------------------------------------------------
+   Marchés hebdomadaires du secteur.
+   `jour` suit getDay() : 0 = dimanche … 6 = samedi.
+   Jours vérifiés le 10/08/2026 auprès des mairies, offices de tourisme
+   et annuaires communaux — voir MARCHES_SOURCES plus bas.
+   ------------------------------------------------------------------ */
+
+const MARCHES = [
+  { commune: "Pontrieux", jour: 1, horaire: "matin", lieu: "Centre bourg", min: 45, creneau: "matin" },
+  { commune: "Saint-Quay-Portrieux", jour: 1, horaire: "8 h 30 – 13 h 30", lieu: "Quai Richet", min: 12, creneau: "matin" },
+  { commune: "Erquy", jour: 1, horaire: "17 h – 21 h (l'été)", lieu: "Marché du soir", min: 52, creneau: "soir" },
+
+  { commune: "Paimpol", jour: 2, horaire: "matin", lieu: "Place du Martray et les quais", min: 35, creneau: "matin" },
+  { commune: "Étables-sur-Mer", jour: 2, horaire: "matin", lieu: "Place Kersaint Gilly et rue Touroux", min: 5, creneau: "matin" },
+  { commune: "Pléneuf", jour: 2, horaire: "8 h – 13 h", lieu: "Place de Nantois", min: 48, creneau: "matin" },
+
+  { commune: "Saint-Brieuc", jour: 3, horaire: "8 h – 13 h", lieu: "Places de la Résistance, du Martray et de la Grille — halles Georges Brassens. 80 exposants", min: 20, creneau: "matin" },
+  { commune: "Tréguier", jour: 3, horaire: "matin", lieu: "Place du Martray — l'un des plus beaux du secteur", min: 50, creneau: "matin" },
+  { commune: "Plouha", jour: 3, horaire: "matin", lieu: "Place de l'église", min: 20, creneau: "matin" },
+
+  { commune: "Binic", jour: 4, horaire: "8 h – 13 h", lieu: "Place Le Pomellec et rue Joffre — en juillet-août il s'étend jusqu'aux quais de Courcy, Jean Bart et Surcouf", min: 0, creneau: "matin" },
+
+  { commune: "Saint-Quay-Portrieux", jour: 5, horaire: "8 h 30 – 13 h 30", lieu: "Place de l'église et rue Jeanne d'Arc", min: 12, creneau: "matin" },
+  { commune: "Val-André", jour: 5, horaire: "8 h – 13 h", lieu: "Place de l'Amirauté", min: 48, creneau: "matin" },
+  { commune: "Lanvollon", jour: 5, horaire: "matin", lieu: "Centre-ville", min: 20, creneau: "matin" },
+
+  { commune: "Saint-Brieuc", jour: 6, horaire: "8 h – 13 h", lieu: "Le grand jour : plus de 100 exposants", min: 20, creneau: "matin" },
+  { commune: "Erquy", jour: 6, horaire: "8 h – 13 h", lieu: "Sous la halle et alentours", min: 52, creneau: "matin" },
+  { commune: "Dahouët", jour: 6, horaire: "8 h – 13 h", lieu: "Quai des Terre-Neuvas", min: 45, creneau: "matin" },
+
+  { commune: "Étables-sur-Mer", jour: 0, horaire: "matin", lieu: "Place Kersaint Gilly", min: 5, creneau: "matin" },
+];
+
+const MARCHES_SOURCES = [
+  { titre: "Le port, les plages, les marchés — ville de Binic-Étables", url: "https://www.binic-etables-sur-mer.fr/le-port-les-plages-les-marches/" },
+  { titre: "Marchés hebdomadaires — ville de Saint-Brieuc", url: "https://www.saint-brieuc.bzh/au-quotidien/commerces-et-marches/marches-et-ventes-ambulantes" },
+  { titre: "Marchés — office de tourisme Cap d'Erquy-Val André", url: "https://www.capderquy-valandre.com/decouvrir/gastronomie/les-marches" },
+  { titre: "Marchés à Saint-Quay-Portrieux", url: "https://www.saintquayportrieux.com/commerces-marches/marches/" },
+  { titre: "Liste des marchés des Côtes d'Armor", url: "https://www.cotesdarmor.com/a-voir-a-faire/gastronomie-bretonne/jours-de-marches/liste-des-marches/" },
+];
+
+/* ------------------------------------------------------------------
+   Brocantes et vide-greniers datés. Une brocante n'a lieu qu'une fois :
+   elle s'affiche sur sa date, et disparaît d'elle-même une fois passée.
+   Relevé le 10/08/2026 — le calendrier bouge, vérifier sur brocabrac.
+   ------------------------------------------------------------------ */
+
+const BROCANTES = [
+  { date: "2026-08-08", commune: "Erquy", nom: "Vide-grenier", horaire: "", min: 52 },
+  { date: "2026-08-08", commune: "Plouha", nom: "Vide-grenier", horaire: "", min: 20 },
+  { date: "2026-08-08", commune: "Saint-Brieuc", nom: "Vide-grenier", horaire: "", min: 20 },
+  { date: "2026-08-08", commune: "Lantic", nom: "Vide-grenier", horaire: "", min: 10 },
+
+  { date: "2026-08-09", commune: "Pléneuf-Val-André", nom: "Vide-grenier, place du 9 Avril 1944", horaire: "", min: 48 },
+  { date: "2026-08-09", commune: "Plouha", nom: "Vide-grenier, 6 le Run", horaire: "dès 9 h 30", min: 20 },
+  { date: "2026-08-09", commune: "Lantic", nom: "Vide-grenier sous barnum", horaire: "dès 9 h", min: 10 },
+
+  { date: "2026-08-13", commune: "Binic-Étables-sur-Mer", nom: "Bouquinistes et brocante — Festival Paimpol Mon Amour", horaire: "dès 10 h", min: 0 },
+
+  { date: "2026-08-14", commune: "Saint-Quay-Portrieux", nom: "Brocante", horaire: "dès 9 h", min: 12 },
+];
+
+const BROCANTES_SOURCES = [
+  { titre: "Vide-greniers et brocantes des Côtes-d'Armor en août — Brocmania", url: "https://www.brocmania.fr/vide-greniers/cotes-d-armor-22/aout" },
+  { titre: "Brocantes et vide-greniers du 22 — Brocabrac", url: "https://brocabrac.fr/22/" },
+  { titre: "Agenda brocantes des Côtes-d'Armor — Fest.fr", url: "https://www.fest.fr/agenda/cotes-d-armor/brocantes-bourses-et-vide-greniers" },
+];
+
+/* Deux fiches synthétiques, construites à partir des tableaux ci-dessus :
+   elles se posent dans un créneau comme n'importe quel autre lieu. */
+
+const JOURS_NOMS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+
+DESTINATIONS.push({
+  id: "marches",
+  nom: "Marchés du coin",
+  sousTitre: "Un marché par jour, tous les jours de la semaine",
+  emoji: "🧺",
+  couleur: "#6b5a2b",
+  cat: "marche",
+  budget: "Entrée libre",
+  trajet: { km: null, min: 0, note: "Selon la commune — de Binic même à 52 min pour Erquy" },
+  duree: "Une matinée",
+  resume:
+    "Il y a un marché tous les jours dans le secteur, et deux les mercredis et samedis. Le plus beau du coin est celui de Tréguier le mercredi ; le plus grand celui de Saint-Brieuc le samedi, avec plus de cent exposants ; et le vôtre, à Binic le jeudi, descend jusqu'aux quais en juillet-août.",
+  aVoir: MARCHES.map((m) => ({
+    nom: `${JOURS_NOMS[m.jour].charAt(0).toUpperCase() + JOURS_NOMS[m.jour].slice(1)} — ${m.commune}`,
+    detail: `${m.lieu}. ${m.min === 0 ? "Sur place." : `~${m.min} min de Binic.`}`,
+    prix: { adulte: 0, enfant: 0, label: m.horaire || "Le matin" },
+    lien: "https://www.cotesdarmor.com/a-voir-a-faire/gastronomie-bretonne/jours-de-marches/liste-des-marches/",
+    lienLabel: "Liste officielle des marchés",
+  })),
+  pratique: [
+    "Le marché du soir d'Erquy, le lundi de 17 h à 21 h l'été, est le seul qui ne mange pas une matinée.",
+    "Tréguier le mercredi et Saint-Brieuc le samedi valent le déplacement en eux-mêmes.",
+    "Arriver avant 11 h : les producteurs plient tôt en août.",
+  ],
+  sources: MARCHES_SOURCES,
+});
+
+DESTINATIONS.push({
+  id: "brocantes",
+  nom: "Brocantes de la semaine",
+  sousTitre: "Vide-greniers datés, à moins d'une heure",
+  emoji: "🪑",
+  couleur: "#5c5a7a",
+  cat: "marche",
+  budget: "Entrée libre",
+  trajet: { km: null, min: 0, note: "Selon la commune" },
+  duree: "Une matinée",
+  resume:
+    "Les vide-greniers et brocantes repérés autour de Binic pour la période. Contrairement aux marchés, ce sont des dates uniques : celle du jeudi 13 août se tient à Binic-Étables même, dans le cadre du Festival Paimpol Mon Amour.",
+  aVoir: BROCANTES.map((b) => ({
+    nom: `${new Date(`${b.date}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })} — ${b.commune}`,
+    detail: `${b.nom}. ${b.min === 0 ? "Sur place." : `~${b.min} min de Binic.`}`,
+    prix: { adulte: 0, enfant: 0, label: b.horaire || "Horaire non précisé" },
+    lien: "https://brocabrac.fr/22/",
+    lienLabel: "Vérifier sur Brocabrac",
+  })),
+  pratique: [
+    "Le calendrier des vide-greniers bouge jusqu'au dernier moment : vérifier la veille.",
+    "Le 13 août à Binic est le plus pratique — c'est à pied.",
+    "Les horaires manquants n'étaient pas publiés : compter un début vers 8-9 h.",
+  ],
+  sources: BROCANTES_SOURCES,
+});
