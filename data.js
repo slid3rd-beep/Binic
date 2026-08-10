@@ -10,7 +10,7 @@ const DESTINATIONS = [
     nom: "Île de Bréhat",
     sousTitre: "L'île aux fleurs, sans voitures",
     emoji: "🌺",
-    couleur: "#e05a7a",
+    couleur: "#b8436a",
     trajet: { km: 40, min: 45, note: "Embarquement à la Pointe de l'Arcouest (Ploubazlanec)" },
     duree: "Journée complète",
     resume:
@@ -122,7 +122,7 @@ const DESTINATIONS = [
     nom: "Paimpol & Abbaye de Beauport",
     sousTitre: "Port d'Islande et abbaye les pieds dans l'eau",
     emoji: "⚓",
-    couleur: "#3d7a5e",
+    couleur: "#33684f",
     trajet: { km: 30, min: 35, note: "Par la D786, jolie route côtière" },
     duree: "Demi-journée à journée",
     resume:
@@ -167,7 +167,7 @@ const DESTINATIONS = [
     nom: "Ploumanac'h & Côte de Granit Rose",
     sousTitre: "Village préféré des Français 2015",
     emoji: "🪨",
-    couleur: "#c2603f",
+    couleur: "#a94e30",
     trajet: { km: 65, min: 65, note: "Via Guingamp ou la côte" },
     duree: "Journée complète",
     resume:
@@ -212,7 +212,7 @@ const DESTINATIONS = [
     nom: "Dinan",
     sousTitre: "Ville d'art et d'histoire, 3 km de remparts",
     emoji: "🏯",
-    couleur: "#7a5aa0",
+    couleur: "#664990",
     trajet: { km: 65, min: 60, note: "Par la N12 puis la D794" },
     duree: "Journée",
     resume:
@@ -257,7 +257,7 @@ const DESTINATIONS = [
     nom: "Cap d'Erquy & Val-André",
     sousTitre: "Falaises de grès rose et grandes plages",
     emoji: "🏖️",
-    couleur: "#d18b2c",
+    couleur: "#a2681b",
     trajet: { km: 45, min: 50, note: "Par Pléneuf-Val-André" },
     duree: "Demi-journée à journée",
     resume:
@@ -346,7 +346,7 @@ const DESTINATIONS = [
     nom: "Parc du Radôme (Pleumeur-Bodou)",
     sousTitre: "Le plan B si la pluie s'installe",
     emoji: "📡",
-    couleur: "#4a6fa5",
+    couleur: "#3f5f8f",
     trajet: { km: 65, min: 65, note: "À côté de Ploumanac'h — combinable" },
     duree: "Demi-journée",
     resume:
@@ -391,7 +391,7 @@ const DESTINATIONS = [
     nom: "Tréguier",
     sousTitre: "Cité épiscopale, Petite Cité de Caractère",
     emoji: "⛪",
-    couleur: "#5b7f4a",
+    couleur: "#4a6b3c",
     trajet: { km: 50, min: 50, note: "Sur la route de la Côte de Granit Rose" },
     duree: "Demi-journée",
     resume:
@@ -479,7 +479,7 @@ const DESTINATIONS = [
     nom: "Binic-Étables-sur-Mer",
     sousTitre: "Notre camp de base",
     emoji: "🏡",
-    couleur: "#3f8f8f",
+    couleur: "#2c7373",
     trajet: { km: 0, min: 0, note: "Sur place" },
     duree: "À toute heure",
     resume:
