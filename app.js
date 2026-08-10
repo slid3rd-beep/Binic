@@ -298,6 +298,27 @@ function demanderPrenom(force) {
   return moi;
 }
 
+/* Partage du lien : feuille de partage iOS si elle est disponible,
+   copie dans le presse-papier sinon. */
+async function partagerLien() {
+  const donnees = {
+    title: "Nos journées en Bretagne",
+    text: "Notre agenda de la semaine et les lieux du coin :",
+    url: location.href,
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(donnees);
+      return;
+    }
+    await navigator.clipboard.writeText(location.href);
+    badge("Lien copié — envoie-le à tes amis");
+  } catch (err) {
+    if (err && err.name === "AbortError") return; // partage annulé, rien à dire
+    prompt("Copie ce lien et envoie-le :", location.href);
+  }
+}
+
 function majBoutonPrenom() {
   $("#who").textContent = moi ? `👤 ${moi}` : "👤 Qui es-tu ?";
 }
@@ -975,6 +996,7 @@ function brancherGlobal() {
   });
 
   $("#who").addEventListener("click", () => demanderPrenom(true));
+  $("#share").addEventListener("click", partagerLien);
 
   $("#week-start").addEventListener("change", async (ev) => {
     const d = new Date(`${ev.target.value}T12:00:00`);

@@ -133,6 +133,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.who.share { margin-left: auto; padding: 6px 13px; font-size: 16px; }
+
+.who.share + .who { margin-left: 0; }
+
 .tabs { display: flex; gap: 22px; margin-top: 12px; }
 
 .tab {
@@ -905,6 +909,7 @@ textarea {
       <h1>Nos journées en Bretagne</h1>
       <p class="baseline">Base : Binic-Étables-sur-Mer · Côtes-d'Armor</p>
     </div>
+    <button id="share" class="who share" type="button" aria-label="Partager le lien">⤴</button>
     <button id="who" class="who" type="button" aria-label="Changer de prénom">👤</button>
   </div>
   <nav class="tabs" role="tablist">
@@ -954,6 +959,15 @@ textarea {
 <div id="drag-ghost" class="drag-ghost" hidden></div>
 
 <div id="sync-badge" class="sync-badge" hidden></div>
+
+<script>
+  /* Hors ligne. Ignoré sur file:// et dans un cadre sans service worker. */
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+  }
+</script>
 
 <script>
 /* Configuration du partage entre téléphones.
@@ -1940,6 +1954,27 @@ function demanderPrenom(force) {
   return moi;
 }
 
+/* Partage du lien : feuille de partage iOS si elle est disponible,
+   copie dans le presse-papier sinon. */
+async function partagerLien() {
+  const donnees = {
+    title: "Nos journées en Bretagne",
+    text: "Notre agenda de la semaine et les lieux du coin :",
+    url: location.href,
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(donnees);
+      return;
+    }
+    await navigator.clipboard.writeText(location.href);
+    badge("Lien copié — envoie-le à tes amis");
+  } catch (err) {
+    if (err && err.name === "AbortError") return; // partage annulé, rien à dire
+    prompt("Copie ce lien et envoie-le :", location.href);
+  }
+}
+
 function majBoutonPrenom() {
   $("#who").textContent = moi ? `👤 ${moi}` : "👤 Qui es-tu ?";
 }
@@ -2617,6 +2652,7 @@ function brancherGlobal() {
   });
 
   $("#who").addEventListener("click", () => demanderPrenom(true));
+  $("#share").addEventListener("click", partagerLien);
 
   $("#week-start").addEventListener("change", async (ev) => {
     const d = new Date(`${ev.target.value}T12:00:00`);

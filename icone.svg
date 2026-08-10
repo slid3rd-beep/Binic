@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Fond «carte marine» + rose des vents : source des icônes de l'app.
+       Rasterisée par build-icones.js en apple-touch-icon.png et icon-*.png. -->
+  <rect width="512" height="512" fill="#072f3c"/>
+  <g stroke="#ffffff" stroke-opacity="0.09" stroke-width="1">
+    <path d="M0 96h512M0 192h512M0 288h512M0 384h512M96 0v512M192 0v512M288 0v512M384 0v512"/>
+  </g>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#8fb3bf" stroke-opacity="0.5" stroke-width="4"/>
+  <circle cx="256" cy="256" r="112" fill="none" stroke="#8fb3bf" stroke-opacity="0.3" stroke-width="3"/>
+  <!-- branches secondaires -->
+  <g fill="#8fb3bf" fill-opacity="0.75">
+    <path d="M256 256 344 168 300 300z"/>
+    <path d="M256 256 168 344 212 212z"/>
+    <path d="M256 256 344 344 212 300z"/>
+    <path d="M256 256 168 168 300 212z"/>
+  </g>
+  <!-- branche nord-sud, l'accent rouille des bouées -->
+  <path d="M256 82 292 256 256 430 220 256z" fill="#b8471f"/>
+  <path d="M82 256 256 220 430 256 256 292z" fill="#e8edef"/>
+  <circle cx="256" cy="256" r="17" fill="#072f3c" stroke="#e8edef" stroke-width="6"/>
+</svg>

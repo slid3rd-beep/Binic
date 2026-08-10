@@ -21,24 +21,43 @@ Zéro dépendance, zéro build, quatre fichiers statiques. Rien à maintenir.
 
 ---
 
-## 1. Le mettre en ligne (5 minutes)
+## 1. Le mettre en ligne (2 minutes)
 
-### Option A — GitHub Pages (gratuit, permanent)
+### GitHub Pages — gratuit, permanent, et le dépôt est déjà public
 
-1. Fusionner cette branche dans `main`.
-2. Sur GitHub : **Settings → Pages**.
-3. *Source* : « Deploy from a branch », branche `main`, dossier `/ (root)`. **Save**.
-4. Une minute plus tard, l'app est sur
-   `https://slid3rd-beep.github.io/binic/`.
+1. <https://github.com/slid3rd-beep/Binic/settings/pages>
+2. *Source* : **Deploy from a branch**.
+3. Branche : `claude/vacation-planning-app-bretagne-f5rq71` — dossier `/ (root)`. **Save**.
+4. Une à deux minutes plus tard, l'app est en ligne sur :
 
-### Option B — Netlify Drop (encore plus rapide, sans compte)
+   **<https://slid3rd-beep.github.io/Binic/>**
 
-Glisser le dossier sur <https://app.netlify.com/drop>. URL immédiate.
+C'est cette adresse qu'on envoie aux copains. Elle marche sur tous les téléphones,
+sans compte et sans installation.
 
-### Sur l'iPhone : l'ajouter à l'écran d'accueil
+> Le dépôt n'a pas encore de branche `main` : la liste déroulante ne propose donc
+> que la branche ci-dessus. Si un jour vous créez `main`, repassez la source
+> dessus — l'URL publique, elle, ne change pas.
 
-Ouvrir l'URL dans Safari → bouton **Partager** → **Sur l'écran d'accueil**.
-Elle s'ouvre alors en plein écran, comme une vraie app.
+### Alternative sans GitHub — Netlify Drop
+
+Glisser le dossier sur <https://app.netlify.com/drop>. URL immédiate, sans compte.
+
+### Sur l'iPhone : la vraie expérience plein écran
+
+Ouvrir l'adresse dans **Safari** → bouton **Partager** → **Sur l'écran d'accueil**.
+L'app s'ouvre alors sans barre d'adresse ni onglets, avec sa propre icône (rose des
+vents), exactement comme une app installée. À faire par chacun sur son téléphone.
+
+Le bouton **⤴** en haut de l'app ouvre la feuille de partage iOS pour envoyer le
+lien par iMessage ou WhatsApp (et le copie dans le presse-papier ailleurs).
+
+### Hors ligne
+
+Un service worker (`sw.js`) met l'app en cache à la première visite : elle s'ouvre
+et reste utilisable sans réseau — utile entre deux caps. Seule la synchronisation
+des données attend le retour du réseau. Après une modification du code, incrémenter
+`CACHE` dans `sw.js` pour que les téléphones prennent la nouvelle version.
 
 ---
 
@@ -136,8 +155,11 @@ partout dans l'app : la mettre à jour quand vous re-vérifiez les prix.
 | `data.js` | **les destinations, tarifs et sources** — le seul fichier à éditer au quotidien |
 | `config.js` | l'URL de partage entre téléphones |
 | `app.js` | agenda, glisser-déposer, calculette, lieux ajoutés, commentaires |
+| `sw.js` | cache hors ligne |
+| `manifest.webmanifest`, `icone.svg`, `*.png` | icône et plein écran sur l'écran d'accueil |
 | `build-page-unique.js` | assemble le tout en un fichier autonome |
-| `manifest.webmanifest` | permet l'ajout à l'écran d'accueil |
+| `build-icones.js` | régénère les PNG depuis `icone.svg` |
+
 
 ---
 

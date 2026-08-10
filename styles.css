@@ -131,6 +131,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.who.share { margin-left: auto; padding: 6px 13px; font-size: 16px; }
+
+.who.share + .who { margin-left: 0; }
+
 .tabs { display: flex; gap: 22px; margin-top: 12px; }
 
 .tab {
