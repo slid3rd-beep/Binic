@@ -4,6 +4,13 @@
 
 const VERIF = "10/08/2026";
 
+/* Rayon d'action : on n'affiche que ce qui est à moins d'une heure de route
+   de Binic. Les fiches au-delà restent dans le fichier — elles réapparaissent
+   en montant cette valeur (70 remet Dinan, le Cap Fréhel, Ploumanac'h et le
+   Radôme ; 90 remet Saint-Malo). Un lieu déjà posé dans la semaine reste
+   affiché dans l'agenda même s'il sort du rayon. */
+const RAYON_MAX_MIN = 60;
+
 const DESTINATIONS = [
   {
     id: "pontrieux",

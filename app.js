@@ -249,12 +249,24 @@ function fiche(ref) {
   };
 }
 
+/* Dans le rayon, ou déjà posé dans la semaine — dans ce cas on continue de
+   l'afficher, sinon la fiche d'une sortie prévue deviendrait introuvable. */
+function dansLeRayon(d) {
+  if (d.trajet.min < RAYON_MAX_MIN) return true;
+  return Object.values(state.creneaux).some((refs) => refs[`d:${d.id}`]);
+}
+
+function horsRayon() {
+  return DESTINATIONS.filter((d) => !dansLeRayon(d));
+}
+
 function toutesLesFiches() {
   const perso = Object.keys(state.lieux)
     .map((k) => fiche(`u:${k}`))
     .filter(Boolean)
     .sort((a, b) => b.ts - a.ts);
-  return [...DESTINATIONS.map((d) => fiche(`d:${d.id}`)), ...perso];
+  const proches = DESTINATIONS.filter(dansLeRayon).map((d) => fiche(`d:${d.id}`));
+  return [...proches, ...perso];
 }
 
 /* Prix plancher par adulte, pour les pastilles et les totaux de journée. */
@@ -414,6 +426,14 @@ function renderSemaine() {
 /* ---------------- vue lieux ---------------- */
 
 function renderGrid() {
+  const loin = horsRayon();
+  $("#hors-rayon").innerHTML = loin.length
+    ? `Liste limitée à <strong>moins d'une heure de route de Binic</strong>.
+       ${loin.length} fiche${loin.length > 1 ? "s sont masquées" : " est masquée"} :
+       ${loin.map((d) => `${esc(d.nom)} (~${d.trajet.min} min)`).join(", ")}.
+       Pour les revoir, monter <code>RAYON_MAX_MIN</code> dans <code>data.js</code>.`
+    : "";
+
   $("#grid").innerHTML = toutesLesFiches()
     .map((f) => {
       const nb = commentairesDe(f.id).length;

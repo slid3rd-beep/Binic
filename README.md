@@ -8,7 +8,7 @@ Côtes-d'Armor, base à **Binic-Étables-sur-Mer**.
   On pose un lieu d'un geste, on le **déplace au doigt** d'un créneau à l'autre,
   et chaque journée affiche son coût estimé. Les journées vides se replient pour
   que la semaine entière tienne sur un écran.
-- **14 lieux** déjà renseignés, de Binic à Saint-Malo, plus **vos propres ajouts** :
+- **12 lieux à moins d'une heure de route de Binic**, plus **vos propres ajouts** :
   une info prise à l'office de tourisme se saisit en 30 secondes (nom, tarif,
   durée, lien, et d'où vient l'info).
 - Pour chaque lieu du catalogue : ce qu'il y a à voir, **les tarifs officiels** avec
@@ -145,6 +145,19 @@ changer les valeurs :
 
 La constante `VERIF` en haut du fichier est la date de relevé des tarifs affichée
 partout dans l'app : la mettre à jour quand vous re-vérifiez les prix.
+
+### Rayon d'action
+
+`RAYON_MAX_MIN` (en haut de `data.js`) limite la liste aux lieux à moins de tant
+de minutes de Binic. Il vaut **60**. Les fiches au-delà ne sont pas supprimées,
+juste masquées — et un lieu déjà posé dans la semaine reste affiché même s'il
+sort du rayon.
+
+| Valeur | Ce que ça remet |
+|---|---|
+| `60` | *(actuel)* — 12 lieux |
+| `70` | + Dinan, Cap Fréhel & Fort la Latte, Ploumanac'h, Parc du Radôme |
+| `90` | + Saint-Malo |
 
 ---
 
