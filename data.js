@@ -6,6 +6,144 @@ const VERIF = "10/08/2026";
 
 const DESTINATIONS = [
   {
+    id: "pontrieux",
+    nom: "Pontrieux",
+    sousTitre: "La cité des 50 lavoirs, sur le Trieux",
+    emoji: "🛶",
+    couleur: "#2b6e78",
+    cat: "sortie",
+    trajet: { km: 42, min: 45, note: "Par Saint-Quay puis la D787" },
+    duree: "Demi-journée",
+    resume:
+      "Petite Cité de Caractère au fond de l'estuaire du Trieux, connue pour ses cinquante lavoirs fleuris alignés au bord de l'eau — on les découvre en barque avec un pilote, ou en pagayant soi-même. Le club nautique part du même endroit pour des descentes de rivière et d'estuaire.",
+    aVoir: [
+      {
+        nom: "Promenade en barque des lavoirs",
+        detail:
+          "Visite commentée des 50 lavoirs par un pilote, ~45 min. Du 2 mai au 28 septembre, 10 h – 18 h (10 h 30 les dimanches et jours fériés). Balades nocturnes sur le parcours illuminé à partir de la mi-juillet. Embarcadère : Jardin de la Passerelle, rue de Traou Mélédern.",
+        prix: { adulte: 5, enfant: 3, label: "dès 5 € adulte / 3 € enfant (4–12 ans) / gratuit –4 ans" },
+        lien: "https://www.pontrieux.bzh/les-lavoirs-fleuris/",
+        lienLabel: "Les lavoirs fleuris — ville de Pontrieux",
+      },
+      {
+        nom: "Canoë-kayak sur l'estuaire du Trieux",
+        detail:
+          "Club Nautique Pontrivien : sorties de 2 à 3 h ou 3 à 4 h, descente de rivière en amont ou de l'estuaire en aval. Équipement, encadrement, assurance et navette compris. Juillet-août : tous les jours sauf dimanche, 9 h – 12 h et 14 h – 18 h.",
+        prix: { adulte: 35, enfant: 25, label: "35 € adulte / 25 € enfant (–12 ans) — estuaire", optionnel: true },
+        lien: "https://www.canoe-kayak-pontrieux.fr/estuaire",
+        lienLabel: "Club Nautique Pontrivien",
+      },
+      {
+        nom: "Le bourg et les quais",
+        detail: "Maisons à pans de bois, la Tour Eiffel de Pontrieux, marché le lundi matin.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://www.guingamp-paimpol.com/",
+        lienLabel: "Office de tourisme Guingamp – Baie de Paimpol",
+      },
+    ],
+    pratique: [
+      "La barque est le « pas cher » du coin : 5 € et 45 min, réservation conseillée en août.",
+      "Le canoë part du même quartier — on peut enchaîner les deux dans la matinée.",
+      "Réserver la barque au 02 96 95 60 31.",
+    ],
+    sources: [
+      { titre: "Les lavoirs fleuris — ville de Pontrieux", url: "https://www.pontrieux.bzh/les-lavoirs-fleuris/" },
+      { titre: "Promenades en barque — Côtes d'Armor Tourisme", url: "https://www.cotesdarmor.com/fr/fiche/equipements-de-loisirs/promenades-decouverte-des-lavoirs-en-barques-pontrieux_TFOLOIBRE0220HA6338/" },
+      { titre: "Club Nautique Pontrivien — estuaire", url: "https://www.canoe-kayak-pontrieux.fr/estuaire" },
+      { titre: "Balade en canoë-kayak sur le Trieux — Guingamp-Paimpol", url: "https://www.guingamp-paimpol.com/nos-experiences/balade-en-canoe-kayak-a-la-decouverte-de-l-estuaire-du-trieux" },
+    ],
+  },
+
+  {
+    id: "petit-jagu",
+    nom: "Le Petit Jagu",
+    sousTitre: "Déjeuner à Ploëzal, entre Pontrieux et le domaine",
+    emoji: "🍽️",
+    couleur: "#8a5a2b",
+    cat: "resto",
+    trajet: { km: 46, min: 50, note: "À Ploëzal, à 5 min de la Roche-Jagu" },
+    duree: "1 h 30",
+    resume:
+      "Le mieux noté des deux restaurants de Ploëzal (4,4/5 sur plus de 130 avis Tripadvisor), cuisine française. Bien placé pour couper la journée entre le canoë à Pontrieux le matin et le domaine l'après-midi.",
+    aVoir: [
+      {
+        nom: "Déjeuner",
+        detail: "Cuisine française et européenne. Téléphoner pour réserver en août — la salle est petite.",
+        prix: { adulte: 0, enfant: 0, label: "Carte à confirmer — compter un menu de bistrot" },
+        lien: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html",
+        lienLabel: "Avis et coordonnées — Tripadvisor",
+      },
+      {
+        nom: "Autre option : le Chaudron Magique",
+        detail: "Au cœur de Ploëzal, décor rustique-moderne, produits frais et locaux.",
+        prix: { adulte: 0, enfant: 0, label: "Tarifs à confirmer", optionnel: true },
+        lien: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html",
+        lienLabel: "Restaurants de Ploëzal — Tripadvisor",
+      },
+    ],
+    pratique: [
+      "Les prix ne sont pas publiés en ligne : à confirmer par téléphone.",
+      "Ploëzal est à 5 km de Pontrieux et 2 km de la Roche-Jagu.",
+      "Deux restaurants seulement dans la commune : réserver.",
+    ],
+    sources: [
+      { titre: "Restaurants de Ploëzal — Tripadvisor", url: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html" },
+      { titre: "Le Petit Jagu — fiche et avis", url: "https://www.tripadvisor.com/Restaurant_Review-g8478011-d8474764-Reviews-Restaurant_Le_Petit_Jagu-Ploezal_Cotes_d_Armor_Brittany.html" },
+    ],
+  },
+
+  {
+    id: "roche-jagu",
+    nom: "Domaine de la Roche-Jagu",
+    sousTitre: "Château du XVe et jardin remarquable, à Ploëzal",
+    emoji: "🌿",
+    couleur: "#3f6b3a",
+    cat: "sortie",
+    trajet: { km: 48, min: 52, note: "À 5 km au nord de Pontrieux, par Ploëzal" },
+    duree: "Demi-journée",
+    resume:
+      "Forteresse du XVe siècle dominant une boucle du Trieux, au milieu d'un parc d'inspiration médiévale labellisé « Jardin remarquable ». Le domaine appartient au Département : le parc et les sentiers sont libres et gratuits toute l'année, seul le château et ses expositions sont payants.",
+    aVoir: [
+      {
+        nom: "Parc et jardins du domaine",
+        detail: "Jardin remarquable, sentiers vers le Trieux, points de vue sur la boucle du fleuve. Accès libre toute l'année.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://larochejagu.cotesdarmor.fr/",
+        lienLabel: "Site officiel du domaine",
+      },
+      {
+        nom: "Château et expositions",
+        detail:
+          "Juillet-août : tous les jours 10 h – 13 h et 14 h – 19 h (hors saison 10 h – 12 h et 14 h – 18 h). Visite guidée tous les jours à 15 h.",
+        prix: {
+          adulte: 6.5,
+          enfant: 4.5,
+          label: "6,50 € plein / 4,50 € réduit / 15 € tarif famille",
+        },
+        lien: "https://larochejagu.cotesdarmor.fr/",
+        lienLabel: "Horaires et tarifs — site officiel",
+      },
+      {
+        nom: "Visite guidée du parc",
+        detail: "Sur les jardins et le paysage du Trieux, programmée selon les jours.",
+        prix: { adulte: 0, enfant: 0, label: "Voir le programme sur place", optionnel: true },
+        lien: "https://larochejagu.cotesdarmor.fr/visites-guidees-du-parc",
+        lienLabel: "Visites guidées du parc",
+      },
+    ],
+    pratique: [
+      "Le parc seul vaut déjà le détour, et il ne coûte rien.",
+      "Tél. 02 96 95 62 35.",
+      "Enchaînement naturel : Pontrieux le matin, déjeuner à Ploëzal, le domaine l'après-midi.",
+    ],
+    sources: [
+      { titre: "Domaine de la Roche-Jagu — site officiel du Département", url: "https://larochejagu.cotesdarmor.fr/" },
+      { titre: "Domaine départemental de la Roche-Jagu — Côtes d'Armor Tourisme", url: "https://www.cotesdarmor.com/fr/fiche/patrimoine-culturel/domaine-departemental-de-la-roche-jagu-ploezal_TFOPCUBRE0220HA66SA/" },
+      { titre: "Comité des Parcs et Jardins de France", url: "https://www.parcsetjardins.fr/jardins/530-domaine-departemental-de-la-roche-jagu" },
+    ],
+  },
+
+  {
     id: "brehat",
     nom: "Île de Bréhat",
     sousTitre: "L'île aux fleurs, sans voitures",

@@ -253,6 +253,325 @@ main { padding: 16px; max-width: 940px; margin: 0 auto; }
   max-width: 62ch;
 }
 
+/* ---------- semaine ---------- */
+
+.week-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.week-arrow {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.week-label { flex: 1; min-width: 0; text-align: center; }
+
+.week-label strong { display: block; font-size: 15px; }
+
+.week-label input[type="date"] {
+  margin-top: 3px;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 12px;
+  padding: 0;
+}
+
+.jour {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.jour.est-auj { border-color: var(--rust); }
+
+.jour-tete {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 11px 14px 9px;
+  background: var(--card-alt);
+  border-bottom: 1px solid var(--line);
+}
+
+.jour-tete h3 {
+  margin: 0;
+  font-size: 14px;
+  text-transform: capitalize;
+  letter-spacing: -0.005em;
+}
+
+.jour-tag {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--rust);
+  border: 1px solid var(--rust);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
+.jour-total { margin-left: auto; font-size: 12.5px; color: var(--ink-soft); font-weight: 650; }
+
+.ligne { display: flex; align-items: stretch; border-top: 1px solid var(--line); }
+
+.ligne:first-of-type { border-top: 0; }
+
+.ligne-nom {
+  flex: 0 0 96px;
+  padding: 12px 0 12px 14px;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-weight: 650;
+}
+
+.zone {
+  flex: 1;
+  min-height: 48px;
+  padding: 8px 12px 8px 4px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.zone.survol { background: var(--ok-bg); box-shadow: inset 0 0 0 2px var(--ok-line); }
+
+.puce {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--puce);
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 6px 6px 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  max-width: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.puce.en-vol { opacity: 0.3; }
+
+.puce-emoji { font-size: 14px; }
+
+.puce-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.puce-x, .chip-x {
+  background: rgba(255, 255, 255, 0.22);
+  border: 0;
+  color: #fff;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.chip-x { background: transparent; color: inherit; width: 16px; height: 16px; margin-left: 4px; }
+
+.zone-plus {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px dashed var(--line-strong);
+  background: none;
+  color: var(--ink-soft);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.zone.vide .zone-plus { width: 100%; text-align: left; padding-left: 10px; border-style: dashed; }
+
+.jour-vide { opacity: 0.92; }
+
+.jour-vide .jour-tete { background: transparent; border-bottom: 0; padding-bottom: 2px; }
+
+.jour-vide .jour-tete h3 { font-weight: 600; color: var(--ink-soft); }
+
+.ligne-repliee .ligne-nom { padding-top: 8px; padding-bottom: 10px; }
+
+.ligne-repliee .zone { padding-top: 4px; padding-bottom: 10px; gap: 5px; }
+
+.mini-plus {
+  border: 1px dashed var(--line-strong);
+  background: none;
+  color: var(--ink-soft);
+  border-radius: 7px;
+  padding: 5px 9px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.mini-plus:active { background: var(--card-alt); }
+
+.drag-ghost {
+  position: fixed;
+  z-index: 80;
+  transform: translate(-50%, -140%);
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--puce, var(--sea));
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.drag-ghost .puce-x { display: none; }
+
+.add-place { width: 100%; margin-bottom: 14px; }
+
+.chip.perso { border-style: dashed; }
+
+.card.est-resto .card-hero { min-height: 74px; }
+
+/* ---------- sélecteur ---------- */
+
+.picker {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(6, 20, 26, 0.5);
+  display: flex;
+  align-items: flex-end;
+}
+
+.picker[hidden] { display: none; }
+
+.picker-panel {
+  background: var(--bg);
+  width: 100%;
+  max-height: 82vh;
+  border-radius: 18px 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--safe-b);
+}
+
+.picker-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 16px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.picker-head strong { font-size: 15px; text-transform: capitalize; }
+
+.picker-close {
+  margin-left: auto;
+  border: 0;
+  background: var(--card-alt);
+  color: var(--ink);
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.picker-list { overflow-y: auto; padding: 8px 12px 16px; }
+
+.picker-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 10px 12px;
+  margin-bottom: 7px;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.picker-item[disabled] { opacity: 0.5; cursor: default; }
+
+.picker-new { border-style: dashed; }
+
+.picker-pastille {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  color: #fff;
+}
+
+.picker-txt { display: flex; flex-direction: column; min-width: 0; }
+
+.picker-nom { font-weight: 650; font-size: 14.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.picker-sub { font-size: 12.5px; color: var(--ink-soft); }
+
+.picker-ok { margin-left: auto; font-size: 11.5px; color: var(--ink-soft); }
+
+/* ---------- champs de formulaire ---------- */
+
+.champ { display: flex; flex-direction: column; gap: 5px; margin-bottom: 13px; }
+
+.champ:last-child { margin-bottom: 0; }
+
+.champ label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 650; }
+
+.champ input, .champ select, .champ textarea {
+  font: inherit;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: var(--card-alt);
+  color: var(--ink);
+  width: 100%;
+}
+
+.champ textarea { min-height: 84px; resize: vertical; }
+
+.day-picker select {
+  font: inherit;
+  font-size: 15px;
+  padding: 9px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: var(--card-alt);
+  color: var(--ink);
+  text-transform: capitalize;
+}
+
 /* ---------- feuille de détail ---------- */
 
 .sheet {
@@ -589,22 +908,31 @@ textarea {
     <button id="who" class="who" type="button" aria-label="Changer de prénom">👤</button>
   </div>
   <nav class="tabs" role="tablist">
-    <button class="tab is-on" data-view="destinations" role="tab">Destinations</button>
-    <button class="tab" data-view="programme" role="tab">Notre programme</button>
+    <button class="tab is-on" data-view="semaine" role="tab">Semaine</button>
+    <button class="tab" data-view="destinations" role="tab">Lieux</button>
   </nav>
 </header>
 
 <main>
-  <section id="view-destinations" class="view">
+  <section id="view-semaine" class="view">
+    <div class="week-nav">
+      <button class="week-arrow" id="week-prev" type="button" aria-label="Semaine précédente">‹</button>
+      <div class="week-label">
+        <strong id="week-range"></strong>
+        <input type="date" id="week-start" aria-label="Samedi de début de séjour">
+      </div>
+      <button class="week-arrow" id="week-next" type="button" aria-label="Semaine suivante">›</button>
+    </div>
+    <div id="semaine"></div>
+  </section>
+
+  <section id="view-destinations" class="view" hidden>
+    <button class="btn add-place" id="add-place" type="button">+ Ajouter un lieu</button>
     <div id="grid" class="grid"></div>
     <p class="footnote">
       Tarifs relevés le <strong>10/08/2026</strong> auprès des sites officiels — chaque prix est cliquable
       et renvoie à sa source. Les grilles changent en cours de saison : re-vérifiez avant de payer.
     </p>
-  </section>
-
-  <section id="view-programme" class="view" hidden>
-    <div id="programme"></div>
   </section>
 </main>
 
@@ -612,6 +940,18 @@ textarea {
   <div class="sheet-scroll" id="sheet-scroll"></div>
   <button id="sheet-close" class="sheet-close" type="button" aria-label="Fermer">✕</button>
 </div>
+
+<div id="picker" class="picker" hidden>
+  <div class="picker-panel">
+    <div class="picker-head">
+      <strong id="picker-title">Ajouter au créneau</strong>
+      <button id="picker-close" class="picker-close" type="button" aria-label="Fermer">✕</button>
+    </div>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<div id="drag-ghost" class="drag-ghost" hidden></div>
 
 <div id="sync-badge" class="sync-badge" hidden></div>
 
@@ -640,6 +980,144 @@ const SYNC_ROOM = "bretagne-2026";
 const VERIF = "10/08/2026";
 
 const DESTINATIONS = [
+  {
+    id: "pontrieux",
+    nom: "Pontrieux",
+    sousTitre: "La cité des 50 lavoirs, sur le Trieux",
+    emoji: "🛶",
+    couleur: "#2b6e78",
+    cat: "sortie",
+    trajet: { km: 42, min: 45, note: "Par Saint-Quay puis la D787" },
+    duree: "Demi-journée",
+    resume:
+      "Petite Cité de Caractère au fond de l'estuaire du Trieux, connue pour ses cinquante lavoirs fleuris alignés au bord de l'eau — on les découvre en barque avec un pilote, ou en pagayant soi-même. Le club nautique part du même endroit pour des descentes de rivière et d'estuaire.",
+    aVoir: [
+      {
+        nom: "Promenade en barque des lavoirs",
+        detail:
+          "Visite commentée des 50 lavoirs par un pilote, ~45 min. Du 2 mai au 28 septembre, 10 h – 18 h (10 h 30 les dimanches et jours fériés). Balades nocturnes sur le parcours illuminé à partir de la mi-juillet. Embarcadère : Jardin de la Passerelle, rue de Traou Mélédern.",
+        prix: { adulte: 5, enfant: 3, label: "dès 5 € adulte / 3 € enfant (4–12 ans) / gratuit –4 ans" },
+        lien: "https://www.pontrieux.bzh/les-lavoirs-fleuris/",
+        lienLabel: "Les lavoirs fleuris — ville de Pontrieux",
+      },
+      {
+        nom: "Canoë-kayak sur l'estuaire du Trieux",
+        detail:
+          "Club Nautique Pontrivien : sorties de 2 à 3 h ou 3 à 4 h, descente de rivière en amont ou de l'estuaire en aval. Équipement, encadrement, assurance et navette compris. Juillet-août : tous les jours sauf dimanche, 9 h – 12 h et 14 h – 18 h.",
+        prix: { adulte: 35, enfant: 25, label: "35 € adulte / 25 € enfant (–12 ans) — estuaire", optionnel: true },
+        lien: "https://www.canoe-kayak-pontrieux.fr/estuaire",
+        lienLabel: "Club Nautique Pontrivien",
+      },
+      {
+        nom: "Le bourg et les quais",
+        detail: "Maisons à pans de bois, la Tour Eiffel de Pontrieux, marché le lundi matin.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://www.guingamp-paimpol.com/",
+        lienLabel: "Office de tourisme Guingamp – Baie de Paimpol",
+      },
+    ],
+    pratique: [
+      "La barque est le « pas cher » du coin : 5 € et 45 min, réservation conseillée en août.",
+      "Le canoë part du même quartier — on peut enchaîner les deux dans la matinée.",
+      "Réserver la barque au 02 96 95 60 31.",
+    ],
+    sources: [
+      { titre: "Les lavoirs fleuris — ville de Pontrieux", url: "https://www.pontrieux.bzh/les-lavoirs-fleuris/" },
+      { titre: "Promenades en barque — Côtes d'Armor Tourisme", url: "https://www.cotesdarmor.com/fr/fiche/equipements-de-loisirs/promenades-decouverte-des-lavoirs-en-barques-pontrieux_TFOLOIBRE0220HA6338/" },
+      { titre: "Club Nautique Pontrivien — estuaire", url: "https://www.canoe-kayak-pontrieux.fr/estuaire" },
+      { titre: "Balade en canoë-kayak sur le Trieux — Guingamp-Paimpol", url: "https://www.guingamp-paimpol.com/nos-experiences/balade-en-canoe-kayak-a-la-decouverte-de-l-estuaire-du-trieux" },
+    ],
+  },
+
+  {
+    id: "petit-jagu",
+    nom: "Le Petit Jagu",
+    sousTitre: "Déjeuner à Ploëzal, entre Pontrieux et le domaine",
+    emoji: "🍽️",
+    couleur: "#8a5a2b",
+    cat: "resto",
+    trajet: { km: 46, min: 50, note: "À Ploëzal, à 5 min de la Roche-Jagu" },
+    duree: "1 h 30",
+    resume:
+      "Le mieux noté des deux restaurants de Ploëzal (4,4/5 sur plus de 130 avis Tripadvisor), cuisine française. Bien placé pour couper la journée entre le canoë à Pontrieux le matin et le domaine l'après-midi.",
+    aVoir: [
+      {
+        nom: "Déjeuner",
+        detail: "Cuisine française et européenne. Téléphoner pour réserver en août — la salle est petite.",
+        prix: { adulte: 0, enfant: 0, label: "Carte à confirmer — compter un menu de bistrot" },
+        lien: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html",
+        lienLabel: "Avis et coordonnées — Tripadvisor",
+      },
+      {
+        nom: "Autre option : le Chaudron Magique",
+        detail: "Au cœur de Ploëzal, décor rustique-moderne, produits frais et locaux.",
+        prix: { adulte: 0, enfant: 0, label: "Tarifs à confirmer", optionnel: true },
+        lien: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html",
+        lienLabel: "Restaurants de Ploëzal — Tripadvisor",
+      },
+    ],
+    pratique: [
+      "Les prix ne sont pas publiés en ligne : à confirmer par téléphone.",
+      "Ploëzal est à 5 km de Pontrieux et 2 km de la Roche-Jagu.",
+      "Deux restaurants seulement dans la commune : réserver.",
+    ],
+    sources: [
+      { titre: "Restaurants de Ploëzal — Tripadvisor", url: "https://www.tripadvisor.fr/Restaurants-g8478011-c20-Ploezal_Cotes_d_Armor_Brittany.html" },
+      { titre: "Le Petit Jagu — fiche et avis", url: "https://www.tripadvisor.com/Restaurant_Review-g8478011-d8474764-Reviews-Restaurant_Le_Petit_Jagu-Ploezal_Cotes_d_Armor_Brittany.html" },
+    ],
+  },
+
+  {
+    id: "roche-jagu",
+    nom: "Domaine de la Roche-Jagu",
+    sousTitre: "Château du XVe et jardin remarquable, à Ploëzal",
+    emoji: "🌿",
+    couleur: "#3f6b3a",
+    cat: "sortie",
+    trajet: { km: 48, min: 52, note: "À 5 km au nord de Pontrieux, par Ploëzal" },
+    duree: "Demi-journée",
+    resume:
+      "Forteresse du XVe siècle dominant une boucle du Trieux, au milieu d'un parc d'inspiration médiévale labellisé « Jardin remarquable ». Le domaine appartient au Département : le parc et les sentiers sont libres et gratuits toute l'année, seul le château et ses expositions sont payants.",
+    aVoir: [
+      {
+        nom: "Parc et jardins du domaine",
+        detail: "Jardin remarquable, sentiers vers le Trieux, points de vue sur la boucle du fleuve. Accès libre toute l'année.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://larochejagu.cotesdarmor.fr/",
+        lienLabel: "Site officiel du domaine",
+      },
+      {
+        nom: "Château et expositions",
+        detail:
+          "Juillet-août : tous les jours 10 h – 13 h et 14 h – 19 h (hors saison 10 h – 12 h et 14 h – 18 h). Visite guidée tous les jours à 15 h.",
+        prix: {
+          adulte: 6.5,
+          enfant: 4.5,
+          label: "6,50 € plein / 4,50 € réduit / 15 € tarif famille",
+        },
+        lien: "https://larochejagu.cotesdarmor.fr/",
+        lienLabel: "Horaires et tarifs — site officiel",
+      },
+      {
+        nom: "Visite guidée du parc",
+        detail: "Sur les jardins et le paysage du Trieux, programmée selon les jours.",
+        prix: { adulte: 0, enfant: 0, label: "Voir le programme sur place", optionnel: true },
+        lien: "https://larochejagu.cotesdarmor.fr/visites-guidees-du-parc",
+        lienLabel: "Visites guidées du parc",
+      },
+    ],
+    pratique: [
+      "Le parc seul vaut déjà le détour, et il ne coûte rien.",
+      "Tél. 02 96 95 62 35.",
+      "Enchaînement naturel : Pontrieux le matin, déjeuner à Ploëzal, le domaine l'après-midi.",
+    ],
+    sources: [
+      { titre: "Domaine de la Roche-Jagu — site officiel du Département", url: "https://larochejagu.cotesdarmor.fr/" },
+      { titre: "Domaine départemental de la Roche-Jagu — Côtes d'Armor Tourisme", url: "https://www.cotesdarmor.com/fr/fiche/patrimoine-culturel/domaine-departemental-de-la-roche-jagu-ploezal_TFOPCUBRE0220HA66SA/" },
+      { titre: "Comité des Parcs et Jardins de France", url: "https://www.parcsetjardins.fr/jardins/530-domaine-departemental-de-la-roche-jagu" },
+    ],
+  },
+
   {
     id: "brehat",
     nom: "Île de Bréhat",
@@ -1164,16 +1642,36 @@ const DESTINATIONS = [
 
 /* ---------------------------------------------------------------
    Nos journées en Bretagne — application statique, sans build.
-   État partagé : commentaires + planning, via Firebase Realtime
-   Database en REST (voir config.js) ou localStorage en repli.
+   État partagé : lieux ajoutés, créneaux de la semaine, commentaires.
+   Via Firebase Realtime Database en REST (voir config.js), ou
+   localStorage en repli quand rien n'est configuré / hors ligne.
    --------------------------------------------------------------- */
 
-const LS_STATE = "bretagne.state.v1";
+const LS_STATE = "bretagne.state.v2";
 const LS_NAME = "bretagne.prenom";
 
-const state = { comments: {}, plan: {} };
+/* Les quatre moments d'une journée. */
+const CRENEAUX = [
+  { id: "matin", nom: "Matin" },
+  { id: "midi", nom: "Midi" },
+  { id: "aprem", nom: "Après-midi" },
+  { id: "soir", nom: "Soir" },
+];
+
+/* Catégories proposées à l'ajout d'un lieu : chacune porte son icône et sa couleur. */
+const CATEGORIES = {
+  visite: { nom: "Visite", emoji: "🏛️", couleur: "#4a6b8a" },
+  balade: { nom: "Balade", emoji: "🥾", couleur: "#4a6b3c" },
+  resto: { nom: "Resto", emoji: "🍽️", couleur: "#8a5a2b" },
+  plage: { nom: "Plage", emoji: "🏖️", couleur: "#a2681b" },
+  marche: { nom: "Marché", emoji: "🧺", couleur: "#8a4b5e" },
+  autre: { nom: "Autre", emoji: "📍", couleur: "#5c6b74" },
+};
+
+const state = { comments: {}, lieux: {}, creneaux: {}, semaine: {} };
 let moi = localStorage.getItem(LS_NAME) || "";
-let destOuverte = null;
+let sheetCourant = null; // { type: "lieu", ref } | { type: "form" }
+let cibleCreneau = null; // slot visé par le sélecteur
 
 const remote = typeof SYNC_URL === "string" && SYNC_URL.trim() !== "";
 const base = remote ? `${SYNC_URL.replace(/\/$/, "")}/${SYNC_ROOM}` : null;
@@ -1194,10 +1692,29 @@ function loadLocal() {
   try {
     const raw = JSON.parse(localStorage.getItem(LS_STATE) || "{}");
     state.comments = raw.comments || {};
-    state.plan = raw.plan || {};
+    state.lieux = raw.lieux || {};
+    state.creneaux = raw.creneaux || {};
+    state.semaine = raw.semaine || {};
   } catch (_) {
     /* données illisibles : on repart d'un état vide */
   }
+  reprendreAncienPlanning();
+}
+
+/* La première version rangeait une date par destination. On la convertit
+   en créneaux du matin pour ne rien perdre. */
+function reprendreAncienPlanning() {
+  let ancien = {};
+  try {
+    ancien = JSON.parse(localStorage.getItem("bretagne.state.v1") || "{}").plan || {};
+  } catch (_) {
+    return;
+  }
+  Object.entries(ancien).forEach(([destId, date]) => {
+    const slot = `${date}|matin`;
+    (state.creneaux[slot] ||= {})[`d:${destId}`] = true;
+  });
+  if (Object.keys(ancien).length) saveLocal();
 }
 
 async function pull() {
@@ -1206,45 +1723,87 @@ async function pull() {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = (await res.json()) || {};
   state.comments = data.comments || {};
-  state.plan = data.plan || {};
+  state.lieux = data.lieux || {};
+  state.creneaux = data.creneaux || {};
+  state.semaine = data.semaine || {};
   saveLocal();
 }
 
-async function pushComment(entry) {
-  if (!remote) {
+/* Écritures : chacune touche une clé précise, jamais le document entier —
+   deux téléphones qui écrivent en même temps ne s'écrasent pas. */
+
+async function envoyer(chemin, valeur) {
+  saveLocal();
+  if (!remote) return;
+  const url = `${base}/${chemin}.json`;
+  const res =
+    valeur === null
+      ? await fetch(url, { method: "DELETE" })
+      : await fetch(url, { method: "PUT", body: JSON.stringify(valeur) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+}
+
+async function ajouter(collection, entree) {
+  const local = () => {
     const key = `l${Date.now()}${Math.random().toString(36).slice(2, 7)}`;
-    state.comments[key] = entry;
+    state[collection][key] = entree;
     saveLocal();
-    return;
-  }
-  const res = await fetch(`${base}/comments.json`, {
-    method: "POST",
-    body: JSON.stringify(entry),
-  });
+    return key;
+  };
+  if (!remote) return local();
+  const res = await fetch(`${base}/${collection}.json`, { method: "POST", body: JSON.stringify(entree) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const { name } = await res.json();
-  state.comments[name] = entry;
+  state[collection][name] = entree;
   saveLocal();
+  return name;
+}
+
+async function pushComment(entry) {
+  await ajouter("comments", entry);
 }
 
 async function dropComment(key) {
   delete state.comments[key];
-  saveLocal();
-  if (!remote) return;
-  const res = await fetch(`${base}/comments/${key}.json`, { method: "DELETE" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  await envoyer(`comments/${key}`, null);
 }
 
-async function pushPlan(destId, date) {
-  if (date) state.plan[destId] = date;
-  else delete state.plan[destId];
-  saveLocal();
-  if (!remote) return;
-  const url = `${base}/plan/${destId}.json`;
-  const res = date
-    ? await fetch(url, { method: "PUT", body: JSON.stringify(date) })
-    : await fetch(url, { method: "DELETE" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+async function pushLieu(entry) {
+  return ajouter("lieux", entry);
+}
+
+async function dropLieu(key) {
+  delete state.lieux[key];
+  // On retire aussi le lieu de tous les créneaux où il était posé.
+  const slots = Object.entries(state.creneaux).filter(([, refs]) => refs[`u:${key}`]);
+  await envoyer(`lieux/${key}`, null);
+  for (const [slot] of slots) {
+    delete state.creneaux[slot][`u:${key}`];
+    await envoyer(`creneaux/${slot}/u:${key}`, null);
+  }
+}
+
+async function poser(slot, ref) {
+  (state.creneaux[slot] ||= {})[ref] = true;
+  await envoyer(`creneaux/${slot}/${ref}`, true);
+}
+
+async function retirer(slot, ref) {
+  if (state.creneaux[slot]) delete state.creneaux[slot][ref];
+  await envoyer(`creneaux/${slot}/${ref}`, null);
+}
+
+async function deplacer(slotDe, slotVers, ref) {
+  if (slotDe === slotVers) return;
+  (state.creneaux[slotVers] ||= {})[ref] = true;
+  if (state.creneaux[slotDe]) delete state.creneaux[slotDe][ref];
+  await envoyer(`creneaux/${slotVers}/${ref}`, true);
+  await envoyer(`creneaux/${slotDe}/${ref}`, null);
+}
+
+async function pushSemaine(iso) {
+  state.semaine = { depart: iso };
+  await envoyer("semaine", { depart: iso });
 }
 
 /* ---------------- utilitaires ---------------- */
@@ -1255,9 +1814,38 @@ const euro = (n) =>
 const esc = (s) =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-function jourLisible(iso) {
-  const d = new Date(`${iso}T12:00:00`);
-  if (Number.isNaN(d.getTime())) return iso;
+const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+/* Le samedi de la semaine en cours (ou celui d'avant si on est en semaine). */
+function samediCourant() {
+  const d = new Date();
+  d.setHours(12, 0, 0, 0);
+  d.setDate(d.getDate() - ((d.getDay() + 1) % 7));
+  return iso(d);
+}
+
+function departSemaine() {
+  return state.semaine.depart || samediCourant();
+}
+
+/* Le séjour type : samedi d'arrivée → samedi de départ, soit huit journées. */
+function joursSemaine() {
+  const debut = new Date(`${departSemaine()}T12:00:00`);
+  return Array.from({ length: 8 }, (_, i) => {
+    const d = new Date(debut);
+    d.setDate(debut.getDate() + i);
+    return iso(d);
+  });
+}
+
+function jourCourt(isoDate) {
+  const d = new Date(`${isoDate}T12:00:00`);
+  return d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "short" });
+}
+
+function jourLisible(isoDate) {
+  const d = new Date(`${isoDate}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return isoDate;
   return d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
 }
 
@@ -1267,9 +1855,69 @@ function quandLisible(ts) {
     " · " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
 }
 
-function commentairesDe(destId) {
+/* ---------------- catalogue unifié ---------------- */
+
+/* Une « fiche » : soit une destination livrée avec l'app (ref « d:… »),
+   soit un lieu ajouté par le groupe (ref « u:… »). */
+function fiche(ref) {
+  const [type, id] = [ref.slice(0, 1), ref.slice(2)];
+  if (type === "d") {
+    const d = DESTINATIONS.find((x) => x.id === id);
+    return d ? { ...d, ref, perso: false, cat: d.cat || "sortie" } : null;
+  }
+  const u = state.lieux[id];
+  if (!u) return null;
+  const c = CATEGORIES[u.cat] || CATEGORIES.autre;
+  return {
+    ref,
+    perso: true,
+    cle: id,
+    id,
+    nom: u.nom,
+    sousTitre: u.commune || c.nom,
+    emoji: c.emoji,
+    couleur: c.couleur,
+    cat: u.cat,
+    trajet: { km: null, min: null, note: u.commune || "" },
+    duree: u.duree || "",
+    resume: u.description || "",
+    prixTexte: u.prixTexte || "",
+    prixAdulte: Number(u.prixAdulte) || 0,
+    prixEnfant: Number(u.prixEnfant) || 0,
+    lien: u.lien || "",
+    source: u.source || "",
+    auteur: u.auteur,
+    ts: u.ts,
+  };
+}
+
+function toutesLesFiches() {
+  const perso = Object.keys(state.lieux)
+    .map((k) => fiche(`u:${k}`))
+    .filter(Boolean)
+    .sort((a, b) => b.ts - a.ts);
+  return [...DESTINATIONS.map((d) => fiche(`d:${d.id}`)), ...perso];
+}
+
+/* Prix plancher par adulte, pour les pastilles et les totaux de journée. */
+function prixMini(f) {
+  if (f.perso) return f.prixAdulte || 0;
+  return f.aVoir.filter((s) => !s.prix.optionnel).reduce((sum, s) => sum + (s.prix.adulte || 0), 0);
+}
+
+function labelPrix(f) {
+  const p = prixMini(f);
+  if (f.perso) return f.prixTexte || (p ? `${euro(p)}/adulte` : "Gratuit");
+  return p === 0 ? "Gratuit" : `dès ${euro(p)}/adulte`;
+}
+
+function refsDuSlot(slot) {
+  return Object.keys(state.creneaux[slot] || {});
+}
+
+function commentairesDe(id) {
   return Object.entries(state.comments)
-    .filter(([, c]) => c.dest === destId)
+    .filter(([, c]) => c.dest === id)
     .sort((a, b) => a[1].ts - b[1].ts);
 }
 
@@ -1283,7 +1931,7 @@ function badge(msg, ms = 2600) {
 
 function demanderPrenom(force) {
   if (moi && !force) return moi;
-  const rep = prompt("Ton prénom (il s'affichera à côté de tes commentaires) :", moi || "");
+  const rep = prompt("Ton prénom (il s'affichera à côté de tes ajouts) :", moi || "");
   if (rep && rep.trim()) {
     moi = rep.trim().slice(0, 24);
     localStorage.setItem(LS_NAME, moi);
@@ -1296,147 +1944,291 @@ function majBoutonPrenom() {
   $("#who").textContent = moi ? `👤 ${moi}` : "👤 Qui es-tu ?";
 }
 
-/* ---------------- vue liste ---------------- */
+/* ---------------- vue semaine ---------------- */
 
-function prixMini(dest) {
-  const obligatoires = dest.aVoir.filter((s) => !s.prix.optionnel);
-  const total = obligatoires.reduce((sum, s) => sum + (s.prix.adulte || 0), 0);
-  return total === 0 ? "Gratuit" : `dès ${euro(total)}/adulte`;
+function renderSemaine() {
+  const jours = joursSemaine();
+  const debut = new Date(`${jours[0]}T12:00:00`);
+  const fin = new Date(`${jours[7]}T12:00:00`);
+  const fmt = { day: "numeric", month: "short" };
+
+  $("#week-range").textContent =
+    `Sam ${debut.toLocaleDateString("fr-FR", fmt)} → sam ${fin.toLocaleDateString("fr-FR", fmt)}`;
+  $("#week-start").value = jours[0];
+
+  $("#semaine").innerHTML = jours
+    .map((jour, index) => {
+      const total = CRENEAUX.reduce(
+        (sum, c) => sum + refsDuSlot(`${jour}|${c.id}`).reduce((s, ref) => {
+          const f = fiche(ref);
+          return s + (f ? prixMini(f) : 0);
+        }, 0),
+        0
+      );
+
+      const vide = CRENEAUX.every((c) => refsDuSlot(`${jour}|${c.id}`).length === 0);
+
+      /* Une journée vide se replie sur une seule ligne : la semaine reste
+         lisible d'un coup d'œil, et il suffit d'un geste pour la remplir. */
+      const lignesVides = `
+        <div class="ligne ligne-repliee">
+          <div class="ligne-nom">Libre</div>
+          <!-- Un lieu lâché sur une journée vide atterrit le matin. -->
+          <div class="zone" data-slot="${jour}|matin">
+            ${CRENEAUX.map((c) => `<button class="mini-plus" data-ajouter="${jour}|${c.id}">${c.nom}</button>`).join("")}
+          </div>
+        </div>`;
+
+      const lignes = CRENEAUX.map((c) => {
+        const slot = `${jour}|${c.id}`;
+        const refs = refsDuSlot(slot);
+        const puces = refs
+          .map((ref) => {
+            const f = fiche(ref);
+            if (!f) return "";
+            return `
+              <span class="puce" data-ref="${esc(ref)}" data-slot="${esc(slot)}" style="--puce:${f.couleur}">
+                <span class="puce-emoji">${f.emoji}</span>
+                <span class="puce-nom">${esc(f.nom)}</span>
+                <button class="puce-x" data-retirer="${esc(slot)}::${esc(ref)}" aria-label="Retirer ${esc(f.nom)}">✕</button>
+              </span>`;
+          })
+          .join("");
+
+        return `
+          <div class="ligne">
+            <div class="ligne-nom">${c.nom}</div>
+            <div class="zone${refs.length ? "" : " vide"}" data-slot="${esc(slot)}">
+              ${puces}
+              <button class="zone-plus" data-ajouter="${esc(slot)}" aria-label="Ajouter au ${c.nom.toLowerCase()} du ${jourLisible(jour)}">+</button>
+            </div>
+          </div>`;
+      }).join("");
+
+      const auj = jour === iso(new Date()) ? " est-auj" : "";
+      const arrivee = index === 0 ? "arrivée" : index === 7 ? "départ" : "";
+
+      return `
+        <section class="jour${auj}${vide ? " jour-vide" : ""}">
+          <header class="jour-tete">
+            <h3>${jourCourt(jour)}</h3>
+            ${arrivee ? `<span class="jour-tag">${arrivee}</span>` : ""}
+            ${total > 0 ? `<span class="jour-total">≈ ${euro(total)}/adulte</span>` : ""}
+          </header>
+          ${vide ? lignesVides : lignes}
+        </section>`;
+    })
+    .join("");
+
+  brancherDrag();
 }
 
+/* ---------------- vue lieux ---------------- */
+
 function renderGrid() {
-  $("#grid").innerHTML = DESTINATIONS.map((d) => {
-    const nb = commentairesDe(d.id).length;
-    const jour = state.plan[d.id];
-    return `
-      <button class="card" data-dest="${d.id}">
-        <div class="card-hero" style="background:${d.couleur}">
-          <span class="card-emoji">${d.emoji}</span>
-          <h2>${esc(d.nom)}</h2>
-          <div class="sub">${esc(d.sousTitre)}</div>
+  $("#grid").innerHTML = toutesLesFiches()
+    .map((f) => {
+      const nb = commentairesDe(f.id).length;
+      const place = Object.entries(state.creneaux).filter(([, refs]) => refs[f.ref]).length;
+      const texte = f.resume || "Pas encore de description.";
+      return `
+      <button class="card${f.cat === "resto" ? " est-resto" : ""}" data-ouvrir="${esc(f.ref)}">
+        <div class="card-hero" style="background:${f.couleur}">
+          <span class="card-emoji">${f.emoji}</span>
+          <h2>${esc(f.nom)}</h2>
+          <div class="sub">${esc(f.sousTitre || "")}</div>
         </div>
         <div class="card-body">
           <div class="meta">
-            <span class="chip price">${prixMini(d)}</span>
-            <span class="chip">${d.trajet.km === 0 ? "sur place" : `~${d.trajet.min} min · ${d.trajet.km} km`}</span>
-            <span class="chip">${esc(d.duree)}</span>
-            ${jour ? `<span class="chip day">📅 ${jourLisible(jour)}</span>` : ""}
+            <span class="chip price">${esc(labelPrix(f))}</span>
+            ${f.trajet.min != null ? `<span class="chip">${f.trajet.km === 0 ? "sur place" : `~${f.trajet.min} min · ${f.trajet.km} km`}</span>` : ""}
+            ${f.duree ? `<span class="chip">${esc(f.duree)}</span>` : ""}
+            ${place ? `<span class="chip day">📅 ${place} créneau${place > 1 ? "x" : ""}</span>` : ""}
+            ${f.perso ? `<span class="chip perso">ajouté par ${esc(f.auteur || "?")}</span>` : ""}
           </div>
-          <p>${esc(d.resume.slice(0, 135))}…</p>
+          <p>${esc(texte.slice(0, 135))}${texte.length > 135 ? "…" : ""}</p>
           <div class="card-foot">
-            <span>📍 ${d.aVoir.length} lieux</span>
+            <span>📍 ${f.perso ? "fiche libre" : `${f.aVoir.length} lieux`}</span>
             <span>💬 ${nb} commentaire${nb > 1 ? "s" : ""}</span>
           </div>
         </div>
       </button>`;
-  }).join("");
-}
-
-/* ---------------- vue programme ---------------- */
-
-function renderProgramme() {
-  const prevus = DESTINATIONS.filter((d) => state.plan[d.id]).sort((a, b) =>
-    state.plan[a.id].localeCompare(state.plan[b.id])
-  );
-
-  if (!prevus.length) {
-    $("#programme").innerHTML = `
-      <div class="block">
-        <p class="empty">Rien de calé pour l'instant. Ouvre une destination et choisis une date :
-        elle apparaîtra ici, pour tout le monde.</p>
-      </div>`;
-    return;
-  }
-
-  const parJour = {};
-  prevus.forEach((d) => (parJour[state.plan[d.id]] ||= []).push(d));
-
-  $("#programme").innerHTML = Object.entries(parJour)
-    .map(([jour, dests]) => `
-      <div class="day-group">
-        <h3 class="day-title">${jourLisible(jour)}</h3>
-        ${dests.map((d) => `
-          <button class="day-item" data-dest="${d.id}" style="border-left-color:${d.couleur}">
-            <span>${d.emoji}</span>
-            <span class="n">${esc(d.nom)}</span>
-            <span class="c">${d.trajet.km === 0 ? "sur place" : `~${d.trajet.min} min`} · 💬 ${commentairesDe(d.id).length}</span>
-          </button>`).join("")}
-      </div>`)
+    })
     .join("");
 }
 
-/* ---------------- feuille de détail ---------------- */
+/* ---------------- sélecteur de lieu ---------------- */
 
-function renderSheet(destId) {
-  const d = DESTINATIONS.find((x) => x.id === destId);
-  if (!d) return;
-  destOuverte = destId;
+function ouvrirPicker(slot) {
+  cibleCreneau = slot;
+  const [jour, cre] = slot.split("|");
+  const nomCre = CRENEAUX.find((c) => c.id === cre).nom.toLowerCase();
+  $("#picker-title").textContent = `${nomCre} du ${jourLisible(jour)}`;
 
-  const spots = d.aVoir.map((s, i) => {
-    const gratuit = !s.prix.adulte && !s.prix.enfant && !s.prix.forfait;
-    return `
-      <div class="spot">
-        <div class="spot-head">
-          <input type="checkbox" data-spot="${i}" ${s.prix.optionnel ? "" : "checked"} aria-label="Compter ${esc(s.nom)}">
-          <div>
-            <div class="spot-name">${esc(s.nom)}</div>
-            <div class="spot-detail">${esc(s.detail)}</div>
-            <span class="spot-price${gratuit ? " free" : ""}">${esc(s.prix.label)}</span>
-            <a class="spot-link" href="${esc(s.lien)}" target="_blank" rel="noopener">${esc(s.lienLabel)} ↗</a>
-          </div>
-        </div>
-      </div>`;
-  }).join("");
+  const dejaLa = new Set(refsDuSlot(slot));
+  $("#picker-list").innerHTML =
+    toutesLesFiches()
+      .map((f) => `
+        <button class="picker-item" data-choisir="${esc(f.ref)}" ${dejaLa.has(f.ref) ? "disabled" : ""}>
+          <span class="picker-pastille" style="background:${f.couleur}">${f.emoji}</span>
+          <span class="picker-txt">
+            <span class="picker-nom">${esc(f.nom)}</span>
+            <span class="picker-sub">${esc(labelPrix(f))}${f.duree ? ` · ${esc(f.duree)}` : ""}</span>
+          </span>
+          ${dejaLa.has(f.ref) ? `<span class="picker-ok">déjà là</span>` : ""}
+        </button>`)
+      .join("") +
+    `<button class="picker-item picker-new" data-nouveau="1">
+       <span class="picker-pastille" style="background:var(--sea);color:var(--sea-ink)">+</span>
+       <span class="picker-txt"><span class="picker-nom">Ajouter un lieu…</span>
+       <span class="picker-sub">une info prise à l'office de tourisme</span></span>
+     </button>`;
 
-  const coms = commentairesDe(d.id);
+  $("#picker").hidden = false;
+}
+
+function fermerPicker() {
+  $("#picker").hidden = true;
+  cibleCreneau = null;
+}
+
+/* ---------------- glisser-déposer tactile ---------------- */
+
+let drag = null;
+
+function brancherDrag() {
+  document.querySelectorAll(".puce").forEach((puce) => {
+    puce.addEventListener("pointerdown", (ev) => {
+      if (ev.target.closest(".puce-x")) return;
+      const depart = { x: ev.clientX, y: ev.clientY };
+      drag = {
+        puce,
+        ref: puce.dataset.ref,
+        slot: puce.dataset.slot,
+        depart,
+        actif: false,
+        pointerId: ev.pointerId,
+        timer: setTimeout(() => demarrerDrag(ev), 220),
+      };
+    });
+  });
+}
+
+function demarrerDrag(ev) {
+  if (!drag) return;
+  drag.actif = true;
+  drag.puce.classList.add("en-vol");
+  const ghost = $("#drag-ghost");
+  ghost.innerHTML = drag.puce.innerHTML;
+  ghost.style.setProperty("--puce", getComputedStyle(drag.puce).getPropertyValue("--puce"));
+  ghost.hidden = false;
+  bougerGhost(ev.clientX, ev.clientY);
+  if (navigator.vibrate) navigator.vibrate(12);
+}
+
+function bougerGhost(x, y) {
+  const ghost = $("#drag-ghost");
+  ghost.style.left = `${x}px`;
+  ghost.style.top = `${y}px`;
+}
+
+function zoneSous(x, y) {
+  $("#drag-ghost").style.pointerEvents = "none";
+  const el = document.elementFromPoint(x, y);
+  return el ? el.closest(".zone") : null;
+}
+
+document.addEventListener("pointermove", (ev) => {
+  if (!drag) return;
+  const dx = Math.abs(ev.clientX - drag.depart.x);
+  const dy = Math.abs(ev.clientY - drag.depart.y);
+  if (!drag.actif) {
+    // L'utilisateur fait défiler la page : on annule la prise.
+    if (dx > 10 || dy > 10) { clearTimeout(drag.timer); drag = null; }
+    return;
+  }
+  bougerGhost(ev.clientX, ev.clientY);
+  document.querySelectorAll(".zone.survol").forEach((z) => z.classList.remove("survol"));
+  const zone = zoneSous(ev.clientX, ev.clientY);
+  if (zone) zone.classList.add("survol");
+});
+
+/* Une fois la prise engagée, on bloque le défilement de la page. */
+document.addEventListener("touchmove", (ev) => {
+  if (drag && drag.actif) ev.preventDefault();
+}, { passive: false });
+
+document.addEventListener("pointerup", async (ev) => {
+  if (!drag) return;
+  clearTimeout(drag.timer);
+  const { actif, ref, slot, puce } = drag;
+  drag = null;
+
+  if (!actif) {
+    ouvrirFiche(ref);
+    return;
+  }
+
+  puce.classList.remove("en-vol");
+  $("#drag-ghost").hidden = true;
+  const zone = zoneSous(ev.clientX, ev.clientY);
+  document.querySelectorAll(".zone.survol").forEach((z) => z.classList.remove("survol"));
+
+  if (zone && zone.dataset.slot !== slot) {
+    const f = fiche(ref);
+    await agir(() => deplacer(slot, zone.dataset.slot, ref), `${f ? f.nom : "Déplacé"} → ${nomDuSlot(zone.dataset.slot)}`);
+    repeindre();
+  }
+});
+
+document.addEventListener("pointercancel", () => {
+  if (!drag) return;
+  clearTimeout(drag.timer);
+  if (drag.actif) {
+    drag.puce.classList.remove("en-vol");
+    $("#drag-ghost").hidden = true;
+  }
+  drag = null;
+});
+
+function nomDuSlot(slot) {
+  const [jour, cre] = slot.split("|");
+  const c = CRENEAUX.find((x) => x.id === cre);
+  return `${c.nom.toLowerCase()} de ${jourCourt(jour)}`;
+}
+
+/* ---------------- fiche détaillée ---------------- */
+
+function ouvrirFiche(ref) {
+  const f = fiche(ref);
+  if (!f) return;
+  sheetCourant = { type: "lieu", ref };
+
+  const corps = f.perso ? corpsFichePerso(f) : corpsFicheCatalogue(f);
+  const coms = commentairesDe(f.id);
 
   $("#sheet-scroll").innerHTML = `
-    <div class="detail-hero" style="background:${d.couleur}">
-      <div class="big-emoji">${d.emoji}</div>
-      <h2>${esc(d.nom)}</h2>
-      <div class="sub">${esc(d.sousTitre)}</div>
+    <div class="detail-hero" style="background:${f.couleur}">
+      <div class="big-emoji">${f.emoji}</div>
+      <h2>${esc(f.nom)}</h2>
+      <div class="sub">${esc(f.sousTitre || "")}</div>
     </div>
 
     <div class="detail-body">
-      <div class="block">
-        <p class="lede">${esc(d.resume)}</p>
-        <div class="meta" style="margin-top:12px">
-          <span class="chip">${d.trajet.km === 0 ? "Sur place" : `🚗 ~${d.trajet.min} min · ${d.trajet.km} km depuis Binic`}</span>
-          <span class="chip">⏱ ${esc(d.duree)}</span>
-        </div>
-        ${d.trajet.note ? `<p class="spot-detail" style="margin-top:8px">${esc(d.trajet.note)}</p>` : ""}
-      </div>
+      ${corps}
 
       <div class="block">
-        <h3>On y va quel jour ?</h3>
-        <div class="day-picker">
-          <input type="date" id="pick-day" value="${state.plan[d.id] || ""}">
-          <button class="btn" id="save-day" type="button">Caler</button>
-          ${state.plan[d.id] ? `<button class="btn ghost" id="clear-day" type="button">Retirer</button>` : ""}
+        <h3>Placer dans la semaine</h3>
+        <div id="creneaux-actuels">${listeCreneauxDe(ref)}</div>
+        <div class="day-picker" style="margin-top:10px">
+          <select id="pick-jour" aria-label="Jour">
+            ${joursSemaine().map((j) => `<option value="${j}">${jourCourt(j)}</option>`).join("")}
+          </select>
+          <select id="pick-creneau" aria-label="Créneau">
+            ${CRENEAUX.map((c) => `<option value="${c.id}">${c.nom}</option>`).join("")}
+          </select>
+          <button class="btn" id="pick-poser" type="button">Poser</button>
         </div>
-      </div>
-
-      <div class="block">
-        <h3>À voir &amp; tarifs</h3>
-        <div class="calc">
-          <label for="nb-a">Adultes</label>
-          <input type="number" id="nb-a" min="0" max="30" value="${localStorage.getItem("bretagne.nbA") || 2}">
-          <label for="nb-e">Enfants</label>
-          <input type="number" id="nb-e" min="0" max="30" value="${localStorage.getItem("bretagne.nbE") || 0}">
-        </div>
-        ${spots}
-        <div class="total">
-          <span>Total estimé</span>
-          <span style="text-align:right">
-            <span id="total-val">—</span>
-            <small>hors repas, essence et parkings non listés</small>
-          </span>
-        </div>
-      </div>
-
-      <div class="block">
-        <h3>Bon à savoir</h3>
-        <ul class="plain">${d.pratique.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
       </div>
 
       <div class="block">
@@ -1460,23 +2252,118 @@ function renderSheet(destId) {
         </div>
       </div>
 
-      <div class="block">
-        <h3>Sources</h3>
-        <ul class="plain sources">
-          ${d.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.titre)} ↗</a></li>`).join("")}
-        </ul>
-        <p class="spot-detail" style="margin-top:10px">Tarifs relevés le ${VERIF}. Susceptibles d'avoir changé — le lien officiel fait foi.</p>
-      </div>
+      ${f.perso && f.auteur === moi
+        ? `<div class="block"><button class="btn ghost" id="suppr-lieu" type="button">Supprimer ce lieu</button></div>`
+        : ""}
     </div>`;
 
-  $("#sheet").hidden = false;
-  $("#sheet-scroll").scrollTop = 0;
-  document.body.style.overflow = "hidden";
-  brancherSheet(d);
-  recalcTotal(d);
+  montrerSheet();
+  brancherFiche(f);
 }
 
-function recalcTotal(d) {
+function corpsFicheCatalogue(f) {
+  const spots = f.aVoir.map((s, i) => {
+    const gratuit = !s.prix.adulte && !s.prix.enfant && !s.prix.forfait;
+    return `
+      <div class="spot">
+        <div class="spot-head">
+          <input type="checkbox" data-spot="${i}" ${s.prix.optionnel ? "" : "checked"} aria-label="Compter ${esc(s.nom)}">
+          <div>
+            <div class="spot-name">${esc(s.nom)}</div>
+            <div class="spot-detail">${esc(s.detail)}</div>
+            <span class="spot-price${gratuit ? " free" : ""}">${esc(s.prix.label)}</span>
+            <a class="spot-link" href="${esc(s.lien)}" target="_blank" rel="noopener">${esc(s.lienLabel)} ↗</a>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+
+  return `
+    <div class="block">
+      <p class="lede">${esc(f.resume)}</p>
+      <div class="meta" style="margin-top:12px">
+        <span class="chip">${f.trajet.km === 0 ? "Sur place" : `🚗 ~${f.trajet.min} min · ${f.trajet.km} km depuis Binic`}</span>
+        <span class="chip">⏱ ${esc(f.duree)}</span>
+      </div>
+      ${f.trajet.note ? `<p class="spot-detail" style="margin-top:8px">${esc(f.trajet.note)}</p>` : ""}
+    </div>
+
+    <div class="block">
+      <h3>À voir &amp; tarifs</h3>
+      <div class="calc">
+        <label for="nb-a">Adultes</label>
+        <input type="number" id="nb-a" min="0" max="30" value="${localStorage.getItem("bretagne.nbA") || 2}">
+        <label for="nb-e">Enfants</label>
+        <input type="number" id="nb-e" min="0" max="30" value="${localStorage.getItem("bretagne.nbE") || 0}">
+      </div>
+      ${spots}
+      <div class="total">
+        <span>Total estimé</span>
+        <span style="text-align:right">
+          <span id="total-val">—</span>
+          <small>hors repas, essence et parkings non listés</small>
+        </span>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Bon à savoir</h3>
+      <ul class="plain">${f.pratique.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
+    </div>
+
+    <div class="block">
+      <h3>Sources</h3>
+      <ul class="plain sources">
+        ${f.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.titre)} ↗</a></li>`).join("")}
+      </ul>
+      <p class="spot-detail" style="margin-top:10px">Tarifs relevés le ${VERIF}. Susceptibles d'avoir changé — le lien officiel fait foi.</p>
+    </div>`;
+}
+
+function corpsFichePerso(f) {
+  const lienSource = /^https?:\/\//.test(f.source)
+    ? `<a href="${esc(f.source)}" target="_blank" rel="noopener">${esc(f.source)} ↗</a>`
+    : esc(f.source);
+
+  return `
+    <div class="block">
+      <p class="lede">${f.resume ? esc(f.resume) : `<span class="empty">Pas de description — ouvre le lieu pour en ajouter une.</span>`}</p>
+      <div class="meta" style="margin-top:12px">
+        ${f.sousTitre ? `<span class="chip">📍 ${esc(f.sousTitre)}</span>` : ""}
+        ${f.duree ? `<span class="chip">⏱ ${esc(f.duree)}</span>` : ""}
+        <span class="chip perso">ajouté par ${esc(f.auteur || "?")}</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Tarif</h3>
+      <span class="spot-price${prixMini(f) ? "" : " free"}">${esc(f.prixTexte || "Non renseigné")}</span>
+      ${f.lien ? `<a class="spot-link" href="${esc(f.lien)}" target="_blank" rel="noopener">Réserver / en savoir plus ↗</a>` : ""}
+      ${f.prixAdulte || f.prixEnfant
+        ? `<p class="spot-detail" style="margin-top:10px">Compté dans les totaux de la semaine :
+           ${euro(f.prixAdulte)}/adulte${f.prixEnfant ? ` · ${euro(f.prixEnfant)}/enfant` : ""}.</p>`
+        : ""}
+    </div>
+
+    <div class="block">
+      <h3>D'où vient l'info</h3>
+      <p class="spot-detail" style="margin:0">${f.source ? lienSource : `<span class="empty">Source non renseignée.</span>`}</p>
+    </div>`;
+}
+
+function listeCreneauxDe(ref) {
+  const places = Object.entries(state.creneaux)
+    .filter(([, refs]) => refs[ref])
+    .map(([slot]) => slot)
+    .sort();
+  if (!places.length) return `<p class="empty" style="margin:0">Pas encore calé.</p>`;
+  return `<div class="meta">${places
+    .map((slot) => `<span class="chip day">📅 ${nomDuSlot(slot)}
+      <button class="chip-x" data-retirer="${esc(slot)}::${esc(ref)}" aria-label="Retirer">✕</button></span>`)
+    .join("")}</div>`;
+}
+
+function recalcTotal(f) {
   const a = Number($("#nb-a").value) || 0;
   const e = Number($("#nb-e").value) || 0;
   localStorage.setItem("bretagne.nbA", a);
@@ -1485,60 +2372,201 @@ function recalcTotal(d) {
   let total = 0;
   document.querySelectorAll("[data-spot]").forEach((box) => {
     if (!box.checked) return;
-    const p = d.aVoir[Number(box.dataset.spot)].prix;
+    const p = f.aVoir[Number(box.dataset.spot)].prix;
     total += (p.adulte || 0) * a + (p.enfant || 0) * e + (p.forfait || 0);
   });
 
   $("#total-val").textContent = total === 0 ? "Gratuit" : euro(total);
 }
 
-function brancherSheet(d) {
-  $("#nb-a").addEventListener("input", () => recalcTotal(d));
-  $("#nb-e").addEventListener("input", () => recalcTotal(d));
-  document.querySelectorAll("[data-spot]").forEach((box) =>
-    box.addEventListener("change", () => recalcTotal(d))
-  );
+function brancherFiche(f) {
+  if (!f.perso) {
+    $("#nb-a").addEventListener("input", () => recalcTotal(f));
+    $("#nb-e").addEventListener("input", () => recalcTotal(f));
+    document.querySelectorAll("[data-spot]").forEach((box) =>
+      box.addEventListener("change", () => recalcTotal(f))
+    );
+    recalcTotal(f);
+  }
 
-  $("#save-day").addEventListener("click", async () => {
-    const val = $("#pick-day").value;
-    if (!val) return badge("Choisis d'abord une date");
-    await agir(() => pushPlan(d.id, val), "Journée calée ✓");
-    renderSheet(d.id);
-    renderGrid();
-    renderProgramme();
+  $("#pick-poser").addEventListener("click", async () => {
+    const slot = `${$("#pick-jour").value}|${$("#pick-creneau").value}`;
+    await agir(() => poser(slot, f.ref), `${f.nom} → ${nomDuSlot(slot)}`);
+    $("#creneaux-actuels").innerHTML = listeCreneauxDe(f.ref);
+    brancherRetraits();
+    repeindre({ saufFiche: true });
   });
 
-  const clr = $("#clear-day");
-  if (clr) {
-    clr.addEventListener("click", async () => {
-      await agir(() => pushPlan(d.id, null), "Retiré du programme");
-      renderSheet(d.id);
-      renderGrid();
-      renderProgramme();
-    });
-  }
+  brancherRetraits();
 
   $("#com-send").addEventListener("click", async () => {
     const texte = $("#com-text").value.trim();
     if (!texte) return;
     if (!demanderPrenom()) return badge("Il faut un prénom pour commenter");
     await agir(
-      () => pushComment({ dest: d.id, auteur: moi, texte: texte.slice(0, 1200), ts: Date.now() }),
+      () => pushComment({ dest: f.id, auteur: moi, texte: texte.slice(0, 1200), ts: Date.now() }),
       remote ? "Commentaire partagé ✓" : "Commentaire enregistré (ce téléphone)"
     );
-    renderSheet(d.id);
+    ouvrirFiche(f.ref);
     renderGrid();
-    renderProgramme();
   });
 
   document.querySelectorAll("[data-del]").forEach((btn) =>
     btn.addEventListener("click", async () => {
       if (!confirm("Supprimer ce commentaire ?")) return;
       await agir(() => dropComment(btn.dataset.del), "Supprimé");
-      renderSheet(d.id);
+      ouvrirFiche(f.ref);
       renderGrid();
     })
   );
+
+  const suppr = $("#suppr-lieu");
+  if (suppr) {
+    suppr.addEventListener("click", async () => {
+      if (!confirm(`Supprimer « ${f.nom} » et le retirer de tous les créneaux ?`)) return;
+      await agir(() => dropLieu(f.cle), "Lieu supprimé");
+      fermerSheet();
+      repeindre();
+    });
+  }
+}
+
+function brancherRetraits() {
+  document.querySelectorAll("[data-retirer]").forEach((btn) => {
+    if (btn.dataset.branche) return;
+    btn.dataset.branche = "1";
+    btn.addEventListener("click", async (ev) => {
+      ev.stopPropagation();
+      const [slot, ref] = btn.dataset.retirer.split("::");
+      await agir(() => retirer(slot, ref), "Retiré du créneau");
+      if (sheetCourant && sheetCourant.type === "lieu") {
+        $("#creneaux-actuels").innerHTML = listeCreneauxDe(sheetCourant.ref);
+        brancherRetraits();
+      }
+      repeindre({ saufFiche: true });
+    });
+  });
+}
+
+/* ---------------- formulaire d'ajout ---------------- */
+
+function ouvrirFormulaire(slotVise) {
+  sheetCourant = { type: "form", slot: slotVise || null };
+
+  $("#sheet-scroll").innerHTML = `
+    <div class="detail-hero" style="background:var(--sea);color:var(--sea-ink)">
+      <div class="big-emoji">📝</div>
+      <h2>Ajouter un lieu</h2>
+      <div class="sub">Une info prise à l'office de tourisme, un dépliant, une affiche…</div>
+    </div>
+
+    <div class="detail-body">
+      <div class="block">
+        <div class="champ">
+          <label for="f-nom">Nom du lieu ou de l'activité *</label>
+          <input id="f-nom" type="text" maxlength="70" placeholder="Balade en canoë sur le Trieux">
+        </div>
+        <div class="champ">
+          <label for="f-commune">Commune</label>
+          <input id="f-commune" type="text" maxlength="50" placeholder="Pontrieux">
+        </div>
+        <div class="champ">
+          <label for="f-cat">Catégorie</label>
+          <select id="f-cat">
+            ${Object.entries(CATEGORIES).map(([k, c]) => `<option value="${k}">${c.emoji} ${c.nom}</option>`).join("")}
+          </select>
+        </div>
+        <div class="champ">
+          <label for="f-desc">Description</label>
+          <textarea id="f-desc" maxlength="800" placeholder="Ce qu'on t'a dit sur place : durée, ce qu'on y voit, à quelle heure y aller…"></textarea>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>Tarif</h3>
+        <div class="champ">
+          <label for="f-prix">Tarif tel qu'il est affiché</label>
+          <input id="f-prix" type="text" maxlength="90" placeholder="5 € adulte / 3 € enfant">
+        </div>
+        <div class="calc">
+          <label for="f-pa">Adulte (€)</label>
+          <input type="number" id="f-pa" min="0" step="0.5" placeholder="0">
+          <label for="f-pe">Enfant (€)</label>
+          <input type="number" id="f-pe" min="0" step="0.5" placeholder="0">
+        </div>
+        <p class="spot-detail" style="margin:0">Ces deux nombres servent au total estimé de la journée. Laisse vide si c'est gratuit ou inconnu.</p>
+      </div>
+
+      <div class="block">
+        <h3>Durée et liens</h3>
+        <div class="champ">
+          <label for="f-duree">Durée sur place</label>
+          <input id="f-duree" type="text" maxlength="40" placeholder="45 min">
+        </div>
+        <div class="champ">
+          <label for="f-lien">Lien de réservation ou site officiel</label>
+          <input id="f-lien" type="url" inputmode="url" placeholder="https://…">
+        </div>
+        <div class="champ">
+          <label for="f-source">D'où vient l'info ?</label>
+          <input id="f-source" type="text" maxlength="140" placeholder="Office de tourisme de Pontrieux, dépliant du 10/08">
+        </div>
+      </div>
+
+      <div class="block">
+        <button class="btn" id="f-ok" type="button">Ajouter le lieu</button>
+        <button class="btn ghost" id="f-annuler" type="button" style="margin-left:8px">Annuler</button>
+      </div>
+    </div>`;
+
+  montrerSheet();
+
+  $("#f-annuler").addEventListener("click", fermerSheet);
+  $("#f-ok").addEventListener("click", async () => {
+    const nom = $("#f-nom").value.trim();
+    if (!nom) return badge("Il faut au moins un nom");
+    if (!demanderPrenom()) return badge("Il faut un prénom pour ajouter un lieu");
+
+    const lien = $("#f-lien").value.trim();
+    const entree = {
+      nom: nom.slice(0, 70),
+      commune: $("#f-commune").value.trim().slice(0, 50),
+      cat: $("#f-cat").value,
+      description: $("#f-desc").value.trim().slice(0, 800),
+      prixTexte: $("#f-prix").value.trim().slice(0, 90),
+      prixAdulte: Number($("#f-pa").value) || 0,
+      prixEnfant: Number($("#f-pe").value) || 0,
+      duree: $("#f-duree").value.trim().slice(0, 40),
+      lien: /^https?:\/\//.test(lien) ? lien : "",
+      source: $("#f-source").value.trim().slice(0, 140),
+      auteur: moi,
+      ts: Date.now(),
+    };
+
+    let cle = null;
+    await agir(async () => { cle = await pushLieu(entree); }, `« ${entree.nom} » ajouté`);
+
+    const slot = sheetCourant.slot;
+    if (cle && slot) await agir(() => poser(slot, `u:${cle}`), `Posé sur le ${nomDuSlot(slot)}`);
+
+    repeindre();
+    if (cle) ouvrirFiche(`u:${cle}`);
+    else fermerSheet();
+  });
+}
+
+/* ---------------- feuille ---------------- */
+
+function montrerSheet() {
+  $("#sheet").hidden = false;
+  $("#sheet-scroll").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+
+function fermerSheet() {
+  $("#sheet").hidden = true;
+  document.body.style.overflow = "";
+  sheetCourant = null;
 }
 
 /* Enveloppe les écritures : message de confirmation ou d'échec réseau. */
@@ -1546,51 +2574,87 @@ async function agir(fn, ok) {
   try {
     await fn();
     badge(ok);
-  } catch (err) {
+  } catch (_) {
     badge("Pas de réseau — gardé sur ce téléphone seulement", 3600);
   }
-}
-
-function fermerSheet() {
-  $("#sheet").hidden = true;
-  document.body.style.overflow = "";
-  destOuverte = null;
 }
 
 /* ---------------- amorçage ---------------- */
 
 function brancherGlobal() {
   document.addEventListener("click", (ev) => {
-    const carte = ev.target.closest("[data-dest]");
-    if (carte) renderSheet(carte.dataset.dest);
+    const carte = ev.target.closest("[data-ouvrir]");
+    if (carte) return ouvrirFiche(carte.dataset.ouvrir);
+
+    const plus = ev.target.closest("[data-ajouter]");
+    if (plus) return ouvrirPicker(plus.dataset.ajouter);
+
+    const choix = ev.target.closest("[data-choisir]");
+    if (choix) {
+      const slot = cibleCreneau;
+      fermerPicker();
+      const f = fiche(choix.dataset.choisir);
+      agir(() => poser(slot, choix.dataset.choisir), `${f ? f.nom : "Ajouté"} → ${nomDuSlot(slot)}`).then(repeindre);
+      return;
+    }
+
+    if (ev.target.closest("[data-nouveau]")) {
+      const slot = cibleCreneau;
+      fermerPicker();
+      return ouvrirFormulaire(slot);
+    }
   });
 
   $("#sheet-close").addEventListener("click", fermerSheet);
+  $("#picker-close").addEventListener("click", fermerPicker);
+  $("#picker").addEventListener("click", (ev) => { if (ev.target.id === "picker") fermerPicker(); });
+  $("#add-place").addEventListener("click", () => ouvrirFormulaire(null));
 
   document.addEventListener("keydown", (ev) => {
-    if (ev.key === "Escape" && !$("#sheet").hidden) fermerSheet();
+    if (ev.key !== "Escape") return;
+    if (!$("#picker").hidden) return fermerPicker();
+    if (!$("#sheet").hidden) fermerSheet();
   });
 
   $("#who").addEventListener("click", () => demanderPrenom(true));
+
+  $("#week-start").addEventListener("change", async (ev) => {
+    const d = new Date(`${ev.target.value}T12:00:00`);
+    if (Number.isNaN(d.getTime())) return;
+    if (d.getDay() !== 6) badge("Ce n'est pas un samedi, mais va pour ce jour de départ");
+    await agir(() => pushSemaine(ev.target.value), "Semaine décalée");
+    renderSemaine();
+  });
+
+  $("#week-prev").addEventListener("click", () => decalerSemaine(-7));
+  $("#week-next").addEventListener("click", () => decalerSemaine(7));
 
   document.querySelectorAll(".tab").forEach((tab) =>
     tab.addEventListener("click", () => {
       document.querySelectorAll(".tab").forEach((t) => t.classList.remove("is-on"));
       tab.classList.add("is-on");
-      const cible = tab.dataset.view;
-      $("#view-destinations").hidden = cible !== "destinations";
-      $("#view-programme").hidden = cible !== "programme";
+      $("#view-semaine").hidden = tab.dataset.view !== "semaine";
+      $("#view-destinations").hidden = tab.dataset.view !== "destinations";
     })
   );
 }
 
-function repeindre() {
+async function decalerSemaine(jours) {
+  const d = new Date(`${departSemaine()}T12:00:00`);
+  d.setDate(d.getDate() + jours);
+  await agir(() => pushSemaine(iso(d)), "Semaine décalée");
+  renderSemaine();
+}
+
+function repeindre(opts = {}) {
+  renderSemaine();
   renderGrid();
-  renderProgramme();
-  if (destOuverte && !$("#sheet").hidden) {
-    // On ne réécrit pas la feuille si l'utilisateur est en train d'y taper.
+  if (opts.saufFiche) return;
+  if (sheetCourant && sheetCourant.type === "lieu" && !$("#sheet").hidden) {
     const zone = document.activeElement;
-    if (!zone || (zone.tagName !== "TEXTAREA" && zone.tagName !== "INPUT")) renderSheet(destOuverte);
+    if (!zone || (zone.tagName !== "TEXTAREA" && zone.tagName !== "INPUT" && zone.tagName !== "SELECT")) {
+      ouvrirFiche(sheetCourant.ref);
+    }
   }
 }
 
@@ -1608,19 +2672,19 @@ async function demarrer() {
   loadLocal();
   majBoutonPrenom();
   brancherGlobal();
+  renderSemaine();
   renderGrid();
-  renderProgramme();
 
   if (remote) {
     await synchroniser();
     setInterval(() => {
-      if (document.visibilityState === "visible") synchroniser();
+      if (document.visibilityState === "visible" && !drag && $("#sheet").hidden) synchroniser();
     }, 10000);
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "visible") synchroniser();
     });
   } else {
-    badge("Mode solo : commentaires gardés sur ce téléphone (voir README)", 4200);
+    badge("Mode solo : tout est gardé sur ce téléphone (voir README)", 4200);
   }
 }
 

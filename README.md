@@ -3,14 +3,19 @@
 Petite application pour organiser les journées d'un groupe en vacances dans les
 Côtes-d'Armor, base à **Binic-Étables-sur-Mer**.
 
-- **11 destinations** déjà renseignées, de Binic à Saint-Malo.
-- Pour chacune : ce qu'il y a à voir, **les tarifs officiels** avec le lien vers la
-  page de réservation ou de billetterie, les infos pratiques et **les sources**.
+- Un **agenda de la semaine**, du samedi au samedi (huit journées, comme une
+  location), découpé en quatre créneaux : matin, midi, après-midi, soir.
+  On pose un lieu d'un geste, on le **déplace au doigt** d'un créneau à l'autre,
+  et chaque journée affiche son coût estimé. Les journées vides se replient pour
+  que la semaine entière tienne sur un écran.
+- **14 lieux** déjà renseignés, de Binic à Saint-Malo, plus **vos propres ajouts** :
+  une info prise à l'office de tourisme se saisit en 30 secondes (nom, tarif,
+  durée, lien, et d'où vient l'info).
+- Pour chaque lieu du catalogue : ce qu'il y a à voir, **les tarifs officiels** avec
+  le lien vers la billetterie, les infos pratiques et **les sources**.
 - Une **calculette** : nombre d'adultes / d'enfants, cases à cocher sur les visites,
-  total estimé de la journée.
-- Un **planning** : on cale une destination sur une date, elle apparaît dans
-  l'onglet « Notre programme ».
-- Des **commentaires** par destination, partagés entre les téléphones du groupe.
+  total estimé.
+- Des **commentaires** par lieu, partagés entre les téléphones du groupe.
 
 Zéro dépendance, zéro build, quatre fichiers statiques. Rien à maintenir.
 
@@ -40,7 +45,7 @@ Elle s'ouvre alors en plein écran, comme une vraie app.
 ## 2. Partage entre téléphones
 
 Par défaut (`SYNC_URL` vide dans `config.js`), l'app fonctionne mais **chacun garde
-ses commentaires et son planning sur son propre téléphone**.
+son agenda, ses lieux ajoutés et ses commentaires sur son propre téléphone**.
 
 Pour que tout le groupe voie la même chose, il faut un petit espace de stockage
 en ligne. Le plus simple et gratuit : **Firebase Realtime Database**.
@@ -61,18 +66,30 @@ en ligne. Le plus simple et gratuit : **Firebase Realtime Database**.
    const SYNC_URL = "https://mon-projet-default-rtdb.europe-west1.firebasedatabase.app";
    ```
 
-6. Commit + push. C'est tout : chaque téléphone qui ouvre l'URL voit les
-   commentaires des autres (rafraîchissement toutes les 10 secondes).
+6. Commit + push. C'est tout : chaque téléphone qui ouvre l'URL voit l'agenda,
+   les lieux et les commentaires des autres (rafraîchissement toutes les 10 s).
+
+Chaque écriture ne touche qu'une clé précise (`creneaux/<jour|créneau>/<lieu>`,
+`lieux/<clé>`, `comments/<clé>`), jamais le document entier : deux téléphones qui
+modifient la semaine en même temps ne s'écrasent pas.
 
 Si le réseau tombe (et ça arrive, sur la côte), l'app continue de fonctionner
 avec la dernière copie locale et prévient que la modification n'est pas partie.
 
 ---
 
-## 3. Modifier les destinations
+## 3. Deux façons d'ajouter un lieu
 
-Tout est dans **`data.js`**, un seul tableau lisible. Pour ajouter une destination,
-copier un bloc existant et changer les valeurs :
+**Depuis l'app** (pour tout le monde, sans toucher au code) : bouton
+« + Ajouter un lieu » dans l'onglet *Lieux*, ou « Ajouter un lieu… » au bas du
+sélecteur quand on remplit un créneau. C'est fait pour la situation où on récupère
+une information à l'office de tourisme : nom, commune, catégorie, description,
+tarif affiché, durée, lien, et un champ « d'où vient l'info » pour rester sourcé.
+Les deux nombres *adulte / enfant* alimentent le total estimé de la journée.
+
+**Dans le code** (pour une fiche complète avec plusieurs visites et sources) :
+tout est dans **`data.js`**, un seul tableau lisible. Copier un bloc existant et
+changer les valeurs :
 
 ```js
 {
@@ -80,7 +97,8 @@ copier un bloc existant et changer les valeurs :
   nom: "Nom affiché",
   sousTitre: "Une ligne d'accroche",
   emoji: "⛵",
-  couleur: "#3d7a5e",           // couleur de la bandeau de la carte
+  couleur: "#33684f",           // couleur du bandeau de la carte
+  cat: "sortie",                // "sortie" ou "resto"
   trajet: { km: 30, min: 35, note: "Précision sur la route" },
   duree: "Demi-journée",
   resume: "Deux ou trois phrases.",
@@ -117,7 +135,8 @@ partout dans l'app : la mettre à jour quand vous re-vérifiez les prix.
 | `styles.css` | mise en forme, pensée pour l'iPhone |
 | `data.js` | **les destinations, tarifs et sources** — le seul fichier à éditer au quotidien |
 | `config.js` | l'URL de partage entre téléphones |
-| `app.js` | affichage, calculette, planning, commentaires |
+| `app.js` | agenda, glisser-déposer, calculette, lieux ajoutés, commentaires |
+| `build-page-unique.js` | assemble le tout en un fichier autonome |
 | `manifest.webmanifest` | permet l'ajout à l'écran d'accueil |
 
 ---

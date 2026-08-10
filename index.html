@@ -23,22 +23,31 @@
     <button id="who" class="who" type="button" aria-label="Changer de prénom">👤</button>
   </div>
   <nav class="tabs" role="tablist">
-    <button class="tab is-on" data-view="destinations" role="tab">Destinations</button>
-    <button class="tab" data-view="programme" role="tab">Notre programme</button>
+    <button class="tab is-on" data-view="semaine" role="tab">Semaine</button>
+    <button class="tab" data-view="destinations" role="tab">Lieux</button>
   </nav>
 </header>
 
 <main>
-  <section id="view-destinations" class="view">
+  <section id="view-semaine" class="view">
+    <div class="week-nav">
+      <button class="week-arrow" id="week-prev" type="button" aria-label="Semaine précédente">‹</button>
+      <div class="week-label">
+        <strong id="week-range"></strong>
+        <input type="date" id="week-start" aria-label="Samedi de début de séjour">
+      </div>
+      <button class="week-arrow" id="week-next" type="button" aria-label="Semaine suivante">›</button>
+    </div>
+    <div id="semaine"></div>
+  </section>
+
+  <section id="view-destinations" class="view" hidden>
+    <button class="btn add-place" id="add-place" type="button">+ Ajouter un lieu</button>
     <div id="grid" class="grid"></div>
     <p class="footnote">
       Tarifs relevés le <strong>10/08/2026</strong> auprès des sites officiels — chaque prix est cliquable
       et renvoie à sa source. Les grilles changent en cours de saison : re-vérifiez avant de payer.
     </p>
-  </section>
-
-  <section id="view-programme" class="view" hidden>
-    <div id="programme"></div>
   </section>
 </main>
 
@@ -46,6 +55,18 @@
   <div class="sheet-scroll" id="sheet-scroll"></div>
   <button id="sheet-close" class="sheet-close" type="button" aria-label="Fermer">✕</button>
 </div>
+
+<div id="picker" class="picker" hidden>
+  <div class="picker-panel">
+    <div class="picker-head">
+      <strong id="picker-title">Ajouter au créneau</strong>
+      <button id="picker-close" class="picker-close" type="button" aria-label="Fermer">✕</button>
+    </div>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<div id="drag-ghost" class="drag-ghost" hidden></div>
 
 <div id="sync-badge" class="sync-badge" hidden></div>
 
