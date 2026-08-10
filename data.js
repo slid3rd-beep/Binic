@@ -62,6 +62,69 @@ const DESTINATIONS = [
   },
 
   {
+    id: "saint-quay",
+    nom: "Saint-Quay-Portrieux",
+    sousTitre: "La station voisine, à 12 min",
+    emoji: "🐚",
+    couleur: "#1f6b86",
+    cat: "sortie",
+    trajet: { km: 8, min: 12, note: "Par la côte, en passant par Étables" },
+    duree: "Demi-journée",
+    resume:
+      "La station d'à côté, et la plus équipée du secteur : un des principaux ports de pêche de Bretagne, cinq plages, le sentier des douaniers qui les relie, et surtout une piscine d'eau de mer sur la plage du Casino — on s'y baigne à toute heure, quelle que soit la marée. Avec une pataugeoire juste à côté pour les petits.",
+    aVoir: [
+      {
+        nom: "Piscine d'eau de mer, plage du Casino",
+        detail:
+          "Bassin naturel alimenté par la mer : baignade possible même à marée basse, quand le reste de la baie s'est retiré à des centaines de mètres. Pataugeoire attenante pour les tout-petits. Accès libre.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://www.saintquayportrieux.com/",
+        lienLabel: "Office de tourisme de Saint-Quay-Portrieux",
+      },
+      {
+        nom: "Port d'Armor et la criée",
+        detail:
+          "L'un des grands ports coquilliers de Bretagne. Visites guidées « Saint-Quay Port d'Armor » et visite de la criée, sur réservation à l'office de tourisme, à partir de 4 adultes — tenue fournie. À savoir : la criée ne bat son plein qu'en saison de la coquille, d'octobre à avril ; en août l'activité est calme.",
+        prix: { adulte: 0, enfant: 0, label: "Tarif non publié — réserver au 02 96 70 40 64", optionnel: true },
+        lien: "https://www.saintquayportrieux.com/loisirs/visites-guidees/",
+        lienLabel: "Visites guidées — office de tourisme",
+      },
+      {
+        nom: "Sentier des douaniers, du Portrieux au Casino",
+        detail: "Le GR34 longe les falaises et relie les plages les unes aux autres. Courte portion très faisable en famille.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://www.saintquayportrieux.com/",
+        lienLabel: "Office de tourisme de Saint-Quay-Portrieux",
+      },
+      {
+        nom: "Plage de la Comtesse et les îlots",
+        detail: "Vue sur les îlots de Saint-Quay, accessibles en canoë-kayak. Plages de sable fin et de galets selon les anses.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://www.cotesdarmor.com/a-voir-a-faire/patrimoine/villes-et-villages-classes/les-stations-balneaires/saint-quay-portrieux/",
+        lienLabel: "Saint-Quay-Portrieux — Côtes d'Armor Tourisme",
+      },
+      {
+        nom: "Marchés du lundi et du vendredi",
+        detail: "Lundi 8 h 30 – 13 h 30 quai Richet, vendredi 8 h 30 – 13 h 30 place de l'église.",
+        prix: { adulte: 0, enfant: 0, label: "Gratuit" },
+        lien: "https://www.saintquayportrieux.com/commerces-marches/marches/",
+        lienLabel: "Marchés — ville de Saint-Quay",
+      },
+    ],
+    pratique: [
+      "La piscine d'eau de mer est l'argument massue : c'est le seul endroit du coin où l'heure de la marée n'a aucune importance.",
+      "Le P'tit Flot, dans la liste des restos, est ici — on peut enchaîner plage et dîner sans reprendre la voiture.",
+      "Brocante le vendredi 14 août, dès 9 h.",
+    ],
+    sources: [
+      { titre: "Office de tourisme de Saint-Quay-Portrieux", url: "https://www.saintquayportrieux.com/" },
+      { titre: "Saint-Quay-Portrieux — Côtes d'Armor Tourisme", url: "https://www.cotesdarmor.com/a-voir-a-faire/patrimoine/villes-et-villages-classes/les-stations-balneaires/saint-quay-portrieux/" },
+      { titre: "Visite de la criée — Les Minutes Bleues", url: "https://www.saintquayportrieux.com/exp%C3%A9riences/visite-criee/" },
+      { titre: "Saint-Quay-Portrieux — Tourisme Bretagne", url: "https://www.tourismebretagne.com/destinations/les-10-destinations/baie-de-saint-brieuc-paimpol-les-caps/saint-quay-portrieux/" },
+    ],
+  },
+
+  {
     id: "rolland",
     nom: "Rolland",
     sousTitre: "Plourhan — le mieux noté du secteur",

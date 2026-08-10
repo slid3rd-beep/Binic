@@ -8,7 +8,7 @@ Côtes-d'Armor, base à **Binic-Étables-sur-Mer**.
   On pose un lieu d'un geste, on le **déplace au doigt** d'un créneau à l'autre,
   et chaque journée affiche son coût estimé. Les journées vides se replient pour
   que la semaine entière tienne sur un écran.
-- **14 lieux à moins d'une heure de route de Binic**, plus **vos propres ajouts** :
+- **15 lieux à moins d'une heure de route de Binic**, plus **vos propres ajouts** :
   une info prise à l'office de tourisme se saisit en 30 secondes (nom, tarif,
   durée, lien, et d'où vient l'info).
 - Pour chaque lieu du catalogue : ce qu'il y a à voir, **les tarifs officiels** avec
@@ -59,10 +59,19 @@ lien par iMessage ou WhatsApp (et le copie dans le presse-papier ailleurs).
 
 ### Hors ligne
 
-Un service worker (`sw.js`) met l'app en cache à la première visite : elle s'ouvre
-et reste utilisable sans réseau — utile entre deux caps. Seule la synchronisation
-des données attend le retour du réseau. Après une modification du code, incrémenter
-`CACHE` dans `sw.js` pour que les téléphones prennent la nouvelle version.
+Un service worker (`sw.js`) garde une copie de l'app : elle s'ouvre et reste
+utilisable sans réseau — utile entre deux caps. Seule la synchronisation des
+données attend le retour du réseau.
+
+Il fonctionne **réseau d'abord, cache en secours** : en ligne, on voit toujours la
+dernière version ; hors ligne, on retombe sur la copie. Il n'y a donc rien à faire
+après une modification du code. (La première version faisait l'inverse et
+demandait d'incrémenter `CACHE` à la main à chaque fois — un oubli suffisait pour
+que les téléphones restent bloqués sur une vieille version.)
+
+**Si un téléphone affiche encore l'ancienne version** : fermer complètement l'app
+et la rouvrir deux fois — le temps que le nouveau service worker s'installe. En
+dernier recours, la retirer de l'écran d'accueil et la rajouter.
 
 ---
 

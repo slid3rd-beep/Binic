@@ -94,8 +94,11 @@
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>
-  /* Hors ligne. Ignoré sur file:// et dans un cadre sans service worker. */
-  if ("serviceWorker" in navigator && location.protocol === "https:") {
+  /* Hors ligne. Ignoré sur file:// et dans un cadre sans service worker.
+     localhost est un contexte sécurisé au même titre que https : l'inclure
+     permet de vérifier le comportement hors ligne avant de déployer. */
+  const secure = location.protocol === "https:" || ["localhost", "127.0.0.1"].includes(location.hostname);
+  if ("serviceWorker" in navigator && secure) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("sw.js").catch(() => {});
     });
