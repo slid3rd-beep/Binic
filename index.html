@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d3b4f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bretagne">
+<title>Nos journées en Bretagne</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦞</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1>Nos journées en Bretagne</h1>
+      <p class="baseline">Base : Binic-Étables-sur-Mer · Côtes-d'Armor</p>
+    </div>
+    <button id="who" class="who" type="button" aria-label="Changer de prénom">👤</button>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab is-on" data-view="destinations" role="tab">Destinations</button>
+    <button class="tab" data-view="programme" role="tab">Notre programme</button>
+  </nav>
+</header>
+
+<main>
+  <section id="view-destinations" class="view">
+    <div id="grid" class="grid"></div>
+    <p class="footnote">
+      Tarifs relevés le <strong>10/08/2026</strong> auprès des sites officiels — chaque prix est cliquable
+      et renvoie à sa source. Les grilles changent en cours de saison : re-vérifiez avant de payer.
+    </p>
+  </section>
+
+  <section id="view-programme" class="view" hidden>
+    <div id="programme"></div>
+  </section>
+</main>
+
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-scroll" id="sheet-scroll"></div>
+  <button id="sheet-close" class="sheet-close" type="button" aria-label="Fermer">✕</button>
+</div>
+
+<div id="sync-badge" class="sync-badge" hidden></div>
+
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
