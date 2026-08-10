@@ -269,6 +269,42 @@ function toutesLesFiches() {
   return [...proches, ...perso];
 }
 
+/* ---------------- photos de bandeau ---------------- */
+
+/* `Special:FilePath` est la redirection officielle et stable de Commons : elle
+   évite de coder en dur les chemins à hash de upload.wikimedia.org, qui, eux,
+   changent. La largeur est demandée au serveur pour ne pas tirer l'original,
+   souvent de plusieurs méga-octets. */
+function urlPhoto(f, largeur) {
+  if (typeof PHOTOS !== "undefined" && PHOTOS === false) return null;
+  if (!f || !f.photo || !f.photo.fichier) return null;
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.photo.fichier)}?width=${largeur}`;
+}
+
+/* La page du fichier porte l'auteur et la licence : c'est elle qu'on crédite. */
+function pagePhoto(f) {
+  return `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f.photo.fichier)}`;
+}
+
+function balisePhoto(f, largeur) {
+  const url = urlPhoto(f, largeur);
+  return url ? `<img class="hero-photo" src="${esc(url)}" alt="" loading="lazy">` : "";
+}
+
+/* Une photo qui ne charge pas est retirée du DOM : le bandeau retombe alors sur
+   son aplat de couleur, exactement comme avant. C'est le cas normal hors ligne,
+   dans un aperçu qui bloque les domaines externes, ou si un nom de fichier
+   Commons est erroné. On teste aussi `complete` : l'échec a pu se produire
+   avant qu'on ait posé l'écouteur. */
+function brancherPhotos() {
+  document.querySelectorAll(".hero-photo:not([data-branche])").forEach((img) => {
+    img.dataset.branche = "1";
+    const abandonner = () => img.remove();
+    img.addEventListener("error", abandonner);
+    if (img.complete && img.naturalWidth === 0) abandonner();
+  });
+}
+
 /* ---------------- tri et filtres ---------------- */
 
 const FILTRES = [
@@ -568,6 +604,7 @@ function renderGrid() {
       return `
       <button class="card${f.cat === "resto" ? " est-resto" : ""}" data-ouvrir="${esc(f.ref)}">
         <div class="card-hero" style="background:${f.couleur}">
+          ${balisePhoto(f, 600)}
           <span class="card-emoji">${f.emoji}</span>
           <h2>${esc(f.nom)}</h2>
           <div class="sub">${esc(f.sousTitre || "")}</div>
@@ -591,6 +628,8 @@ function renderGrid() {
     })
     .join("") ||
     `<p class="empty" style="grid-column:1/-1">Aucun lieu dans cette catégorie.</p>`;
+
+  brancherPhotos();
 }
 
 /* ---------------- sélecteur de lieu ---------------- */
@@ -748,6 +787,7 @@ function ouvrirFiche(ref) {
 
   $("#sheet-scroll").innerHTML = `
     <div class="detail-hero" style="background:${f.couleur}">
+      ${balisePhoto(f, 1200)}
       <div class="big-emoji">${f.emoji}</div>
       <h2>${esc(f.nom)}</h2>
       <div class="sub">${esc(f.sousTitre || "")}</div>
@@ -797,6 +837,7 @@ function ouvrirFiche(ref) {
     </div>`;
 
   montrerSheet();
+  brancherPhotos();
   brancherFiche(f);
 }
 
@@ -865,6 +906,10 @@ function corpsFicheCatalogue(f) {
       <h3>Sources</h3>
       <ul class="plain sources">
         ${f.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.titre)} ↗</a></li>`).join("")}
+        ${f.photo
+          ? `<li><a href="${esc(pagePhoto(f))}" target="_blank" rel="noopener">Photo du bandeau — Wikimedia Commons ↗</a>
+             <span class="spot-detail">auteur et licence sur la page du fichier</span></li>`
+          : ""}
       </ul>
       <p class="spot-detail" style="margin-top:10px">Tarifs relevés le ${VERIF}. Susceptibles d'avoir changé — le lien officiel fait foi.</p>
     </div>`;

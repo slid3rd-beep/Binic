@@ -208,11 +208,58 @@ main { padding: 16px; max-width: 940px; margin: 0 auto; }
   pointer-events: none;
 }
 
-.card-emoji { position: absolute; top: 11px; right: 13px; font-size: 27px; z-index: 1; }
+/* La photo se pose SUR l'aplat de couleur, sous la trame et le dégradé.
+   Si elle ne charge pas, app.js la retire et le bandeau redevient l'aplat :
+   c'est le repli normal hors ligne ou dans un aperçu qui bloque les
+   domaines externes. */
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border: 0;
+  /* Explicite plutôt qu'implicite : la trame et le dégradé sont en 1,
+     le texte en 2, la photo reste dessous. */
+  z-index: 0;
+  /* Un léger assombrissement garde le titre blanc lisible sur une photo claire,
+     sans avoir à connaître l'image à l'avance. */
+  filter: brightness(0.82) saturate(0.95);
+}
 
-.card-hero h2 { margin: 0; font-size: 18.5px; position: relative; z-index: 1; letter-spacing: -0.01em; }
+.card-hero::before, .card-hero::after,
+.detail-hero::before, .detail-hero::after { z-index: 1; }
 
-.card-hero .sub { font-size: 12.5px; opacity: 0.92; position: relative; z-index: 1; }
+/* Avec une photo, l'aplat ne garantit plus le contraste : on pose un voile
+   dégradé qui rend le titre blanc lisible quelle que soit l'image — y compris
+   une plage en plein soleil. Sans photo, le bandeau garde son voile léger. */
+.card-hero:has(.hero-photo)::after,
+.detail-hero:has(.hero-photo)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 20, 26, 0.2) 0%,
+    rgba(4, 20, 26, 0.45) 55%,
+    rgba(4, 20, 26, 0.8) 100%
+  );
+}
+
+.card-hero:has(.hero-photo) h2,
+.card-hero:has(.hero-photo) .sub,
+.detail-hero:has(.hero-photo) h2,
+.detail-hero:has(.hero-photo) .sub {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
+.card-emoji { position: absolute; top: 11px; right: 13px; font-size: 27px; z-index: 2; }
+
+.card-hero h2 { margin: 0; font-size: 18.5px; position: relative; z-index: 2; letter-spacing: -0.01em; }
+
+.card-hero .sub { font-size: 12.5px; opacity: 0.92; position: relative; z-index: 2; }
 
 .card-body { padding: 12px 15px 14px; display: flex; flex-direction: column; gap: 9px; }
 
@@ -745,7 +792,7 @@ main { padding: 16px; max-width: 940px; margin: 0 auto; }
   );
 }
 
-.detail-hero > * { position: relative; }
+.detail-hero > *:not(.hero-photo) { position: relative; z-index: 2; }
 
 .detail-hero h2 { margin: 0; font-size: 25px; letter-spacing: -0.02em; text-wrap: balance; }
 

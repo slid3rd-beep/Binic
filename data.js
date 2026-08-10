@@ -67,6 +67,7 @@ const DESTINATIONS = [
     sousTitre: "La station voisine, à 12 min",
     emoji: "🐚",
     couleur: "#1f6b86",
+    photo: { fichier: "Saint-Quay-Portrieux 2008 PD 02.JPG" },
     cat: "sortie",
     trajet: { km: 8, min: 12, note: "Par la côte, en passant par Étables" },
     duree: "Demi-journée",
@@ -279,6 +280,7 @@ const DESTINATIONS = [
     sousTitre: "Château du XVe et jardin remarquable, à Ploëzal",
     emoji: "🌿",
     couleur: "#3f6b3a",
+    photo: { fichier: "La Roche Jagu Trieux 1.JPG" },
     cat: "sortie",
     trajet: { km: 48, min: 52, note: "À 5 km au nord de Pontrieux, par Ploëzal" },
     duree: "Demi-journée",
@@ -330,6 +332,7 @@ const DESTINATIONS = [
     sousTitre: "L'île aux fleurs, sans voitures",
     emoji: "🌺",
     couleur: "#b8436a",
+    photo: { fichier: "Bréhat banner.jpg" },
     trajet: { km: 40, min: 45, note: "Embarquement à la Pointe de l'Arcouest (Ploubazlanec)" },
     duree: "Journée complète",
     resume:
@@ -390,6 +393,7 @@ const DESTINATIONS = [
     sousTitre: "Falaises de 70 m et château sur la mer",
     emoji: "🏰",
     couleur: "#2f6f8f",
+    photo: { fichier: "Phare cap frehel.jpg" },
     trajet: { km: 60, min: 65, note: "Par Erquy et Plévenon" },
     duree: "Journée",
     resume:
@@ -442,6 +446,7 @@ const DESTINATIONS = [
     sousTitre: "Port d'Islande et abbaye les pieds dans l'eau",
     emoji: "⚓",
     couleur: "#33684f",
+    photo: { fichier: "Paimpol Quai Morand 09847.jpg" },
     trajet: { km: 30, min: 35, note: "Par la D786, jolie route côtière" },
     duree: "Demi-journée à journée",
     resume:
@@ -487,6 +492,7 @@ const DESTINATIONS = [
     sousTitre: "Village préféré des Français 2015",
     emoji: "🪨",
     couleur: "#a94e30",
+    photo: { fichier: "Ploumanac'h banner Coastline.jpg" },
     trajet: { km: 65, min: 65, note: "Via Guingamp ou la côte" },
     duree: "Journée complète",
     resume:
@@ -577,6 +583,7 @@ const DESTINATIONS = [
     sousTitre: "Falaises de grès rose et grandes plages",
     emoji: "🏖️",
     couleur: "#a2681b",
+    photo: { fichier: "Plage du Guen-Lanruen à Erquy.jpg" },
     trajet: { km: 45, min: 50, note: "Par Pléneuf-Val-André" },
     duree: "Demi-journée à journée",
     resume:
@@ -711,6 +718,7 @@ const DESTINATIONS = [
     sousTitre: "Cité épiscopale, Petite Cité de Caractère",
     emoji: "⛪",
     couleur: "#4a6b3c",
+    photo: { fichier: "Tréguier (22) Cathédrale Saint-Tugdual Tour Hastings 01.JPG" },
     trajet: { km: 50, min: 50, note: "Sur la route de la Côte de Granit Rose" },
     duree: "Demi-journée",
     resume:
@@ -799,6 +807,7 @@ const DESTINATIONS = [
     sousTitre: "Notre camp de base",
     emoji: "🏡",
     couleur: "#2c7373",
+    photo: { fichier: "Le Phare de Binic (Panorama).jpg" },
     trajet: { km: 0, min: 0, note: "Sur place" },
     duree: "À toute heure",
     resume:

@@ -204,6 +204,42 @@ bouton « Tout afficher » — un filtre ne doit jamais être un cul-de-sac.
 Le sélecteur qui s'ouvre sur un créneau ignore volontairement le filtre : quand
 on remplit une journée, on veut tout avoir sous la main.
 
+### Photos des bandeaux
+
+Les bandeaux affichent une photo du lieu servie par **Wikimedia Commons**, posée
+par-dessus l'aplat de couleur. Dans `data.js` :
+
+```js
+photo: { fichier: "Bréhat banner.jpg" },   // nom exact du fichier sur Commons
+```
+
+L'URL est construite dans `app.js` via `Special:FilePath`, la redirection stable
+de Commons — jamais les chemins à hash de `upload.wikimedia.org`, qui changent.
+La largeur est demandée au serveur (600 px en vignette, 1200 px en fiche) pour ne
+pas tirer l'original, souvent de plusieurs méga-octets.
+
+**Si une image ne charge pas, elle est retirée et le bandeau redevient un aplat
+de couleur**, à l'identique de la version précédente : ni cadre vide, ni icône
+cassée. Ce repli se déclenche hors ligne, dans un aperçu qui bloque les domaines
+externes, et si un nom de fichier est erroné.
+
+Trois conséquences à connaître :
+
+- **Les photos n'apparaissent que sur le site GitHub Pages.** Un aperçu Claude
+  interdit les domaines externes : il montrera les aplats.
+- **Hors ligne, pas de photos non plus** — le service worker ne met en cache que
+  les fichiers de l'app, pas les images distantes.
+- Les fiches sans photo (Pontrieux, Saint-Brieuc, les restaurants…) gardent leur
+  aplat : c'est volontaire, pas un oubli. Les restaurants sont exclus par
+  principe — il n'existe pas de photo libre de ces établissements.
+
+`PHOTOS = false` dans `config.js` revient aux aplats partout.
+
+**Licences** : les photos de Commons sont majoritairement en CC BY-SA, le crédit
+est obligatoire. Chaque fiche pourvue d'une photo porte dans ses sources un lien
+vers la page du fichier, où figurent l'auteur et la licence — à vérifier une fois
+les images visibles.
+
 ### Rayon d'action
 
 `RAYON_MAX_MIN` (en haut de `data.js`) limite la liste aux lieux à moins de tant
