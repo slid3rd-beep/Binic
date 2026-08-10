@@ -188,11 +188,18 @@ Dans l'onglet *Lieux* : filtre par catégorie (Tout · Sorties · Restos · Marc
 Ajoutés, avec le compte de chacune) et ordre au choix — distance, note, prix, nom,
 ajout récent.
 
-Deux partis pris. Les valeurs manquantes ne valent pas zéro : un lieu sans note
+Trois partis pris. Les valeurs manquantes ne valent pas zéro : un lieu sans note
 n'est pas un lieu noté 0, il part **en fin de liste** plutôt que de remonter à
-tort — même chose pour un lieu ajouté sans distance connue. Et le choix de tri
-est rangé dans `localStorage`, pas dans l'état partagé : c'est un confort
-d'affichage personnel, chacun trie comme il veut sans l'imposer aux autres.
+tort — même chose pour un lieu ajouté sans distance connue.
+
+Le choix de tri est rangé dans `localStorage`, pas dans l'état partagé : c'est un
+confort d'affichage personnel, chacun trie comme il veut sans l'imposer aux autres.
+
+**Le filtre, lui, ne survit pas au rechargement.** C'est un geste ponctuel, pas
+une préférence : le garder d'une session à l'autre revenait à rouvrir l'app sur
+2 lieux au lieu de 15, sans qu'on comprenne où les autres étaient passés. Et tant
+qu'un filtre est actif, une ligne indique combien de lieux il masque avec un
+bouton « Tout afficher » — un filtre ne doit jamais être un cul-de-sac.
 
 Le sélecteur qui s'ouvre sur un créneau ignore volontairement le filtre : quand
 on remplit une journée, on veut tout avoir sous la main.

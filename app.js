@@ -296,9 +296,14 @@ function triCourant() {
   return TRIS[localStorage.getItem("bretagne.tri")] ? localStorage.getItem("bretagne.tri") : "distance";
 }
 
+/* L'ordre de tri est une préférence, il se garde d'une session à l'autre.
+   Le filtre, lui, est un geste ponctuel : il ne survit pas au rechargement.
+   Le garder revenait à ouvrir l'app sur 2 lieux au lieu de 15 sans qu'on
+   comprenne pourquoi les autres avaient disparu. */
+let filtreActif = "tout";
+
 function filtreCourant() {
-  const val = localStorage.getItem("bretagne.filtre");
-  return FILTRES.some((f) => f.id === val) ? val : "tout";
+  return filtreActif;
 }
 
 function trierEtFiltrer(fiches) {
@@ -543,6 +548,17 @@ function renderGrid() {
 
   const fiches = toutesLesFiches();
   renderBarreTri(fiches);
+
+  /* Un filtre actif ne doit jamais être un cul-de-sac : on dit combien de
+     lieux il cache, et on laisse un bouton pour tout revoir. */
+  const visibles = trierEtFiltrer(fiches).length;
+  const caches = fiches.length - visibles;
+  $("#filtre-actif").innerHTML =
+    filtreCourant() === "tout" || !caches
+      ? ""
+      : `Filtre « ${esc(FILTRES.find((f) => f.id === filtreCourant()).nom)} » :
+         ${caches} autre${caches > 1 ? "s" : ""} lieu${caches > 1 ? "x" : ""} masqué${caches > 1 ? "s" : ""}.
+         <button class="lien-bouton" data-filtre="tout">Tout afficher</button>`;
 
   $("#grid").innerHTML = trierEtFiltrer(fiches)
     .map((f) => {
@@ -1134,7 +1150,7 @@ function brancherGlobal() {
 
     const chip = ev.target.closest("[data-filtre]");
     if (chip) {
-      localStorage.setItem("bretagne.filtre", chip.dataset.filtre);
+      filtreActif = chip.dataset.filtre;
       return renderGrid();
     }
 
