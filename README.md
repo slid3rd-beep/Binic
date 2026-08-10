@@ -17,7 +17,9 @@ Côtes-d'Armor, base à **Binic-Étables-sur-Mer**.
   total estimé.
 - Des **commentaires** par lieu, partagés entre les téléphones du groupe.
 
-Zéro dépendance, zéro build, quatre fichiers statiques. Rien à maintenir.
+Zéro dépendance, zéro build : que des fichiers statiques, servis tels quels.
+Rien à maintenir. (Les deux scripts `build-*.js` sont facultatifs et ne servent
+qu'à régénérer l'icône et la version en un seul fichier.)
 
 ---
 
